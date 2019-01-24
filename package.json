@@ -1,11 +1,12 @@
 {
-  "name": "base58-address-generator",
+  "name": "eureka-pdf-parser",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "chroma-js": "^2.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-dropzone": "^8.0.3",
     "react-ink": "^6.4.0",
     "react-portal-tooltip": "^2.4.2",
     "react-responsive-carousel": "^3.1.45",
