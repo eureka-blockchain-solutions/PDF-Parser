@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import * as PdfJs from "pdfjs-dist";
-import {WORKER_URL} from "./WorkerLink";
+import { WORKER_URL } from "./WorkerLink";
 
 const Container = styled.div``;
 
@@ -21,8 +21,21 @@ class PDFReader extends Component {
     // Asynchronous download of PDF
     const loadingTask = PdfJs.getDocument(url);
 
-    loadingTask.promise.then(function(pdf) {
-      console.log(pdf);
+    loadingTask.promise.then(pdf => {
+      pdf.getPage(1).then(page => {
+        page.getTextContent().then(function(textContent) {
+          const textItems = textContent.items;
+          let finalString = "";
+
+          // Concatenate the string of the item to the final string
+          for (let i = 0; i < textItems.length; i++) {
+            const item = textItems[i];
+            finalString += item.str + " ";
+          }
+
+          console.log(finalString);
+        });
+      });
     });
   }
 
