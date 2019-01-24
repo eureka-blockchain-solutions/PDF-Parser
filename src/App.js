@@ -3,6 +3,7 @@ import styled from "styled-components";
 import EurekaLogo from "./views/icons/EurekaLogo";
 import { __THIRD } from "./helpers/colors";
 import Icon from "./views/icons/Icon";
+import PDFDropzone from "./components/PDFDropzone";
 
 const Container = styled.div`
   display: flex;
@@ -29,7 +30,13 @@ const Absolute = styled.div`
   align-items: center;
 `;
 
-const SubContainer = styled.div``;
+const SubContainer = styled.div`
+  width: 60%;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
 
 class App extends Component {
   render() {
@@ -42,7 +49,9 @@ class App extends Component {
             <Icon icon={"uploadPDF"} width={38} height={38} color={__THIRD} />
           </Absolute>
         </RelativeContainer>
-        <SubContainer>Let's start!</SubContainer>
+        <SubContainer>
+          <PDFDropzone />
+        </SubContainer>
       </Container>
     );
   }
