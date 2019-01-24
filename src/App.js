@@ -1,26 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import styled from "styled-components";
+import EurekaLogo from "./views/icons/EurekaLogo";
+import { __THIRD } from "./helpers/colors";
+import Icon from "./views/icons/Icon";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const RelativeContainer = styled.div`
+  position: relative;
+  margin-top: 30px;
+`;
+
+const Title = styled.h1`
+  font-family: "Indie Flower", cursive;
+  font-size: 38px;
+  margin-right: 4px;
+`;
+
+const Absolute = styled.div`
+  position: absolute;
+  bottom: -30px;
+  right: -50px;
+  display: flex;
+  align-items: center;
+`;
+
+const SubContainer = styled.div``;
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Container>
+        <RelativeContainer>
+          <EurekaLogo width={500} />
+          <Absolute>
+            <Title>PDF Parser</Title>
+            <Icon icon={"uploadPDF"} width={38} height={38} color={__THIRD} />
+          </Absolute>
+        </RelativeContainer>
+        <SubContainer>Let's start!</SubContainer>
+      </Container>
     );
   }
 }
