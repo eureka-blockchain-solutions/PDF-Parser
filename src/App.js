@@ -3,7 +3,8 @@ import styled from "styled-components";
 import EurekaLogo from "./views/icons/EurekaLogo";
 import { __THIRD } from "./helpers/colors";
 import Icon from "./views/icons/Icon";
-import PDFDropzone from "./components/PDFDropzone";
+import PDFDropzone from "./components/PDFjs/PDFDropzone";
+import PDFReader from "./components/PDFjs/PDFReader";
 
 const Container = styled.div`
   display: flex;
@@ -51,6 +52,7 @@ class App extends Component {
         </RelativeContainer>
         <SubContainer>
           <PDFDropzone />
+          <PDFReader />
         </SubContainer>
       </Container>
     );

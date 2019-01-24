@@ -1,8 +1,8 @@
 import React from "react";
 import Dropzone from "react-dropzone";
 import styled from "styled-components";
-import { __FIFTH, __GRAY_300, __GRAY_500 } from "../helpers/colors.js";
-import Icon from "../views/icons/Icon.js";
+import { __FIFTH, __GRAY_300, __GRAY_500 } from "../../helpers/colors.js";
+import Icon from "../../views/icons/Icon.js";
 
 const DropZoneContainer = styled.div`
   display: flex;
@@ -71,7 +71,7 @@ const DropperTitle = styled.h2`
 
 class PDFDropzone extends React.Component {
   onDrop = (acceptedFiles, rejectedFiles) => {
-    // Do something with files
+    console.log(acceptedFiles);
   };
 
   render() {
@@ -80,7 +80,7 @@ class PDFDropzone extends React.Component {
         <StyledDropzone onDrop={this.onDrop.bind(this)}>
           {({ getRootProps, getInputProps, isDragActive }) => {
             return (
-              <div {...getRootProps()} style={{width: '100%'}}>
+              <div {...getRootProps()} style={{ width: "100%" }}>
                 <input {...getInputProps()} />
                 <Dropper isDragActive={isDragActive}>
                   <DropperContent>
