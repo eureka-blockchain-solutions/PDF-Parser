@@ -15,7 +15,8 @@ class PDFReader extends Component {
   async componentDidMount() {
     // If absolute URL from the remote server is provided, configure the CORS
     // header on that server.
-    const url = "dataset/paper1.pdf";
+    const url =
+      "https://s3.amazonaws.com/sosjournals/CzOgBO72dKUZ093Dpaper1.pdf";
 
     // The workerSrc property shall be specified.
     PdfJs.GlobalWorkerOptions.workerSrc = WORKER_URL;
@@ -23,7 +24,6 @@ class PDFReader extends Component {
     const loadingTask = PdfJs.getDocument(url);
 
     loadingTask.promise.then(pdf => {
-      let pdfFullText = "";
       const TOTAL_PAGES = pdf._pdfInfo.numPages;
       const pagesPromises = [];
 
@@ -68,7 +68,7 @@ class PDFReader extends Component {
   }
 
   render() {
-    return <Container>PDFReader Component</Container>;
+    return <Container />;
   }
 }
 
