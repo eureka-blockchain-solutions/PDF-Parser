@@ -103,6 +103,7 @@ class PDFDropzone extends React.Component {
               if (u.id === id) {
                 return {
                   id,
+                  name,
                   progress: percent
                 };
               }
@@ -111,16 +112,16 @@ class PDFDropzone extends React.Component {
           });
         },
         onFinishS3Put: public_url => {
-          /*    this.props.onChangeFigure({
-                      contents: [
-                        {
-                          url: public_url,
-                          name,
-                          type,
-                          id: "f-" + Math.floor(Math.random() * 100000000)
-                        }
-                      ]
-                    });*/
+          this.props.onFinish({
+            contents: [
+              {
+                url: public_url,
+                name,
+                type,
+                id: "f-" + Math.floor(Math.random() * 100000000)
+              }
+            ]
+          });
           this.setState({
             uploading: this.state.uploading.filter(u => u.id !== id)
           });
@@ -168,7 +169,7 @@ class PDFDropzone extends React.Component {
         {this.state.uploading.map(u => {
           return (
             <VerticalContainer key={u.id}>
-              <BarLoader progress={u.progress} />
+              <BarLoader progress={u.progress} name={u.name} />
             </VerticalContainer>
           );
         })}

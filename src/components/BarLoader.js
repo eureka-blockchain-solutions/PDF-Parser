@@ -1,18 +1,20 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { __FIFTH, __THIRD } from "../helpers/colors";
-
+import Icon from "../views/icons/Icon";
 
 const Container = styled.div`
   width: 100%;
   height: 10px;
   border-radius: 20px;
   background: ${__THIRD};
+  position: relative;
+  margin-top: 12px;
 `;
 
 const Progress = styled.div`
   background: ${__FIFTH};
-  box-shadow: 0 2px 20px ${__FIFTH};
+  box-shadow: 0 1px 5px ${__FIFTH};
   width: ${props => props.progress}%;
   height: 100%;
   border-radius: 20px;
@@ -27,10 +29,21 @@ const Number = styled.div`
   color: ${__FIFTH};
 `;
 
-const BarLoader = ({ progress }) => {
+const FileName = styled.span`
+  position: absolute;
+  top: 10px;
+  font-style: italic;
+  color: ${__FIFTH};
+`;
+
+const BarLoader = ({ progress, name }) => {
   console.log(progress);
   return (
     <Container>
+      <FileName>
+        <Icon icon={"uploadPDF"} width={18} height={18} color={__FIFTH} />
+        {name}
+      </FileName>
       <Progress progress={progress}>
         <Number>{progress}%</Number>
       </Progress>

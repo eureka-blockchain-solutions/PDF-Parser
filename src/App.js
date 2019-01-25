@@ -51,7 +51,11 @@ class App extends Component {
           </Absolute>
         </RelativeContainer>
         <SubContainer>
-          <PDFDropzone />
+          <PDFDropzone
+            onFinish={content => {
+              console.log(content);
+            }}
+          />
           <PDFReader />
         </SubContainer>
       </Container>
