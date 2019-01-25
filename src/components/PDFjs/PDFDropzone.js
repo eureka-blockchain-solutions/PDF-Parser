@@ -78,6 +78,8 @@ const VerticalContainer = styled.div`
   flex: 1;
   flex-direction: column;
   display: flex;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 class PDFDropzone extends React.Component {
@@ -110,15 +112,15 @@ class PDFDropzone extends React.Component {
         },
         onFinishS3Put: public_url => {
           /*    this.props.onChangeFigure({
-            contents: [
-              {
-                url: public_url,
-                name,
-                type,
-                id: "f-" + Math.floor(Math.random() * 100000000)
-              }
-            ]
-          });*/
+                      contents: [
+                        {
+                          url: public_url,
+                          name,
+                          type,
+                          id: "f-" + Math.floor(Math.random() * 100000000)
+                        }
+                      ]
+                    });*/
           this.setState({
             uploading: this.state.uploading.filter(u => u.id !== id)
           });
