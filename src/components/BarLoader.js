@@ -31,7 +31,7 @@ const Number = styled.div`
 
 const FileName = styled.span`
   position: absolute;
-  top: 10px;
+  top: 15px;
   font-style: italic;
   color: ${__FIFTH};
 `;
@@ -40,10 +40,13 @@ const BarLoader = ({ progress, name }) => {
   console.log(progress);
   return (
     <Container>
-      <FileName>
-        <Icon icon={"uploadPDF"} width={18} height={18} color={__FIFTH} />
-        {name}
-      </FileName>
+      {name ? (
+        <FileName>
+          <Icon icon={"uploadPDF"} width={18} height={18} color={__FIFTH} />
+          {name}
+        </FileName>
+      ) : null}
+
       <Progress progress={progress}>
         <Number>{progress}%</Number>
       </Progress>
