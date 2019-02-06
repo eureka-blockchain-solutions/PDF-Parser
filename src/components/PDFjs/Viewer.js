@@ -20,6 +20,8 @@ class Viewer extends Component {
 
   async componentDidMount() {
     let { pdf } = this.props;
+
+
     const TOTAL_PAGES = pdf ? pdf._pdfInfo.numPages : 0;
 
     const pagesPromises = [];
@@ -40,25 +42,32 @@ class Viewer extends Component {
    *
    * @param {Integer} pageNum Specifies the number of the page
    * @param {PDFDocument} PDFDocumentInstance The PDF document obtained
+   * https://mozilla.github.io/pdf.js/api/draft/global.html#getTextContentParameters
    **/
   getPageText(pageNum, PDFDocumentInstance) {
     // Return a Promise that is solved once the text of the page is retrieven
     return new Promise(function(resolve, reject) {
       PDFDocumentInstance.getPage(pageNum).then(pdfPage => {
+        console.log(pdfPage);
         // The main trick to obtain the text of the PDF page, use the getTextContent method
-        pdfPage.getTextContent().then(function(textContent) {
-          const textItems = textContent.items;
-          let finalString = "";
+        pdfPage
+          .getTextContent({
+            normalizeWhitespace: true,
+            disableCombineTextItems: true
+          })
+          .then(function(textContent) {
+            const textItems = textContent.items;
+            let finalString = "";
 
-          // Concatenate the string of the item to the final string
-          for (let i = 0; i < textItems.length; i++) {
-            const item = textItems[i];
-            finalString += item.str + " ";
-          }
+            // Concatenate the string of the item to the final string
+            for (let i = 0; i < textItems.length; i++) {
+              const item = textItems[i];
+              finalString += item.str + " ";
+            }
 
-          // Solve promise with the text retrieven from the page
-          resolve(finalString);
-        });
+            // Solve promise with the text retrieven from the page
+            resolve(finalString);
+          });
       });
     });
   }
