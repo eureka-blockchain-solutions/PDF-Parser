@@ -30,7 +30,8 @@ class PDFReader extends Component {
     /*    const url =
       "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf";*/
 
-    const url = "https://s3.amazonaws.com/sosjournals/joujy4QT3l0bcHzLSelf-Contained_Proofs-IEEE-eka.pdf"; // this.props.pdfs[0];
+    const url =
+      "https://s3.amazonaws.com/sosjournals/joujy4QT3l0bcHzLSelf-Contained_Proofs-IEEE-eka.pdf"; // this.props.pdfs[0];
 
     // The workerSrc property shall be specified.
     PdfJs.GlobalWorkerOptions.workerSrc = WORKER_URL;
@@ -39,51 +40,7 @@ class PDFReader extends Component {
 
     const that = this;
     loadingTask.promise.then(pdf => {
-
-
-
-
       that.setState({ pdf });
-      const TOTAL_PAGES = pdf._pdfInfo.numPages;
-      const pagesPromises = [];
-
-      for (let p = 1; p <= TOTAL_PAGES; p++) {
-        pagesPromises.push(this.getPageText(p, pdf));
-      }
-
-      Promise.all(pagesPromises).then(pagesText => {
-        // Display text of all the pages in the console
-        console.log(pagesText);
-      });
-    });
-  }
-
-  /**
-   * Retrieves the text of a specif page within a PDF Document obtained through pdf.js
-   *
-   * @param {Integer} pageNum Specifies the number of the page
-   * @param {PDFDocument} PDFDocumentInstance The PDF document obtained
-   **/
-  getPageText(pageNum, PDFDocumentInstance) {
-    const that = this;
-    // Return a Promise that is solved once the text of the page is retrieven
-    return new Promise(function(resolve, reject) {
-      PDFDocumentInstance.getPage(pageNum).then(pdfPage => {
-        // The main trick to obtain the text of the PDF page, use the getTextContent method
-        pdfPage.getTextContent().then(function(textContent) {
-          const textItems = textContent.items;
-          let finalString = "";
-
-          // Concatenate the string of the item to the final string
-          for (let i = 0; i < textItems.length; i++) {
-            const item = textItems[i];
-            finalString += item.str + " ";
-          }
-
-          // Solve promise with the text retrieven from the page
-          resolve(finalString);
-        });
-      });
     });
   }
 

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Page } from "./Page";
 import AddressExtractor from "./AddressExtractor";
 import * as PropTypes from "prop-types";
+import * as PdfJs from "pdfjs-dist";
 
 const ViewContainer = styled.div``;
 
@@ -21,7 +22,6 @@ class Viewer extends Component {
   async componentDidMount() {
     let { pdf } = this.props;
 
-
     const TOTAL_PAGES = pdf ? pdf._pdfInfo.numPages : 0;
 
     const pagesPromises = [];
@@ -32,6 +32,7 @@ class Viewer extends Component {
 
     const pages = await Promise.all(pagesPromises).then(pagesText => {
       // Display text of all the pages in the console
+      console.log(pagesText);
       return pagesText;
     });
 
@@ -48,7 +49,6 @@ class Viewer extends Component {
     // Return a Promise that is solved once the text of the page is retrieven
     return new Promise(function(resolve, reject) {
       PDFDocumentInstance.getPage(pageNum).then(pdfPage => {
-        console.log(pdfPage);
         // The main trick to obtain the text of the PDF page, use the getTextContent method
         pdfPage
           .getTextContent({
@@ -56,17 +56,19 @@ class Viewer extends Component {
             disableCombineTextItems: true
           })
           .then(function(textContent) {
+            console.log(textContent);
             const textItems = textContent.items;
             let finalString = "";
 
             // Concatenate the string of the item to the final string
+            let row = [];
             for (let i = 0; i < textItems.length; i++) {
               const item = textItems[i];
-              finalString += item.str + " ";
+              row.push(item.str);
             }
 
             // Solve promise with the text retrieven from the page
-            resolve(finalString);
+            resolve(row);
           });
       });
     });

@@ -46,7 +46,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      pdfs: null
+      pdfs: []
     };
   }
   render() {
