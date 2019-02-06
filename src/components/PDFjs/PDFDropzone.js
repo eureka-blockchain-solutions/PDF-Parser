@@ -142,7 +142,6 @@ class PDFDropzone extends React.Component {
   }
 
   render() {
-    console.log(this.state.uploading);
     return (
       <DropZoneContainer>
         <StyledDropzone onDrop={this.onDrop.bind(this)}>

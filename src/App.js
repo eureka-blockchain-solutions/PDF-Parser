@@ -32,14 +32,21 @@ const Absolute = styled.div`
 `;
 
 const SubContainer = styled.div`
-  width: 60%;
+  width: 100%;
   align-self: center;
   justify-content: center;
   align-items: center;
   display: flex;
+  flex-direction: column;
 `;
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      pdfs: null
+    };
+  }
   render() {
     return (
       <Container>
@@ -52,11 +59,11 @@ class App extends Component {
         </RelativeContainer>
         <SubContainer>
           <PDFDropzone
-            onFinish={content => {
-              console.log(content);
+            onFinish={item => {
+              this.setState({ pdfs: [...item.contents] });
             }}
           />
-          <PDFReader />
+          {this.state.pdfs ? <PDFReader pdfs={this.state.pdfs} /> : null}
         </SubContainer>
       </Container>
     );
