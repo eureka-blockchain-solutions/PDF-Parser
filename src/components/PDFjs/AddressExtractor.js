@@ -13,7 +13,26 @@ class AddressExtractor extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const tokens = this.props.text;
+  }
+
+  tokenizePage() {}
+
+  /**
+   * Function that checks whether there are EKA addresses in the PAGE (using checksum and decoding function )
+   */
+  areThereEKAAddresses() {}
+
+  /**
+   * Extract EKAAddresses
+   */
+  extractEKAAddresses() {}
+
+  /*Automation extraction from PDF for author names always need a manual check from the user*/
+  tryToFindAuthorNames() {}
+
+  makeSuggestionsForAuthorNames() {}
 
   render() {
     return (
