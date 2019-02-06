@@ -32,6 +32,10 @@ class Page extends Component {
     this.canvas = canvas;
   };
 
+  getCanvasRef = () => {
+    return this.canvas;
+  };
+
   _update = pdf => {
     if (pdf) {
       this._loadPage(pdf);
@@ -50,31 +54,39 @@ class Page extends Component {
   }
 
   _renderPage(page) {
-   
-    let { scale } = this.props;
+    let scale = 0.6;
     let viewport = page.getViewport(scale);
-    let width = 600;
-    let height = 800;
-    let canvas = this.canvas;
+
+    let width = viewport.width;
+    let height = viewport.height;
+    let canvas = this.getCanvasRef();
     let context = canvas.getContext("2d");
 
     canvas.width = width;
     canvas.height = height;
 
-    page.render({
+    const renderTask = page.render({
       canvasContext: context,
       viewport
     });
 
-    this.setState({ status: "rendered", page, width, height });
+    const that = this;
+    renderTask.promise.then(function() {
+      that.setState({ status: "rendered", page, width, height });
+    });
   }
 
   render() {
     let { width, height, status } = this.state;
 
+    console.log(this.state);
+
     return (
       <div className={`pdf-page ${status}`} style={{ width, height }}>
         <canvas ref={this.setCanvasRef} />
+        {this.state.status === "rendered" ? (
+          <canvas ref={this.getCanvasRef} />
+        ) : null}
       </div>
     );
   }
