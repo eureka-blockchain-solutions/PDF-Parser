@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 
 /**
  * Page.js
  * Component rendering page of PDF
  **/
+
+const CanvasContainer = styled.div`
+  flex: 1;
+`;
 
 class Page extends Component {
   state = {
@@ -54,7 +59,7 @@ class Page extends Component {
   }
 
   _renderPage(page) {
-    let scale = 0.6;
+    let scale = 1;
     let viewport = page.getViewport(scale);
 
     let width = viewport.width;
@@ -82,12 +87,12 @@ class Page extends Component {
     console.log(this.state);
 
     return (
-      <div className={`pdf-page ${status}`} style={{ width, height }}>
+      <CanvasContainer width={width} height={height}>
         <canvas ref={this.setCanvasRef} />
         {this.state.status === "rendered" ? (
           <canvas ref={this.getCanvasRef} />
         ) : null}
-      </div>
+      </CanvasContainer>
     );
   }
 }

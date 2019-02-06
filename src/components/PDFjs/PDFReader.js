@@ -8,8 +8,13 @@ import PDF from "./PDF";
 import { Viewer } from "./Viewer";
 
 const Container = styled.div`
-  flex: 1;
+  width: 100%;
+  max-width: 1160px;
   border: 1px solid ${__GRAY_200};
+`;
+
+const SubContainer = styled.div`
+  display: flex;
 `;
 
 class PDFReader extends Component {
@@ -59,27 +64,6 @@ class PDFReader extends Component {
     // Return a Promise that is solved once the text of the page is retrieven
     return new Promise(function(resolve, reject) {
       PDFDocumentInstance.getPage(pageNum).then(pdfPage => {
-        const scale = 1.5;
-        const viewport = pdfPage.getViewport({ scale: scale });
-        const index = pdfPage.pageIndex;
-
-        // Prepare canvas using PDF page dimensions
-        /*  console.log(pdfPage);
-        if (index === 0) {
-          const ref = that.refs["firstPage"];
-          const canvas = ref;
-          const context = canvas.getContext("2d");
-          canvas.height = 800;
-          canvas.width = 600;
-
-          // Render PDF page into canvas context
-          const renderContext = { canvasContext: context, viewport: viewport };
-          const renderTask = pdfPage.render(renderContext);
-          renderTask.promise.then(function() {
-            console.log("Page rendered");
-          });
-        }*/
-
         // The main trick to obtain the text of the PDF page, use the getTextContent method
         pdfPage.getTextContent().then(function(textContent) {
           const textItems = textContent.items;
@@ -99,11 +83,14 @@ class PDFReader extends Component {
   }
 
   render() {
-    console.log(this.state.pdf);
     return (
       <Container>
-        {/*<canvas ref="firstPage" />*/}
-        {this.state.pdf ? <Viewer pdf={this.state.pdf} /> : null}
+        {this.state.pdf ? (
+          <SubContainer>
+            <Viewer pdf={this.state.pdf} />
+            {/*<AddressExtractor pdf={this.state.pdf} />*/}
+          </SubContainer>
+        ) : null}
       </Container>
     );
   }

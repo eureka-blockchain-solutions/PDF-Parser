@@ -5,6 +5,7 @@ import { __THIRD } from "./helpers/colors";
 import Icon from "./views/icons/Icon";
 import PDFDropzone from "./components/PDFjs/PDFDropzone";
 import PDFReader from "./components/PDFjs/PDFReader";
+import { DESKTOP_WIDTH } from "./helpers/layout";
 
 const Container = styled.div`
   display: flex;
@@ -32,7 +33,8 @@ const Absolute = styled.div`
 `;
 
 const SubContainer = styled.div`
-  width: 100%;
+  max-width: ${DESKTOP_WIDTH}px;
+  margin: auto; 
   align-self: center;
   justify-content: center;
   align-items: center;

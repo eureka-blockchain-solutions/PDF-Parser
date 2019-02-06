@@ -7,6 +7,7 @@ import S3Upload from "../S3Upload";
 import randomstring from "randomstring";
 import { getDomain } from "../../helpers/getDomain";
 import BarLoader from "../BarLoader";
+import { TABLETS_WIDTH } from "../../helpers/layout";
 
 const DropZoneContainer = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const DropZoneContainer = styled.div`
   align-items: center;
   flex: 1;
   min-width: 200px;
-  width: 60%;
+  width: ${TABLETS_WIDTH}px;
   margin: 2em 0;
   flex-direction: column;
 `;

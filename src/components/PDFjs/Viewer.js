@@ -1,7 +1,15 @@
-import React from 'react';
+import React from "react";
+import styled from "styled-components";
 
 // Components
-import { Page } from './Page';
+import { Page } from "./Page";
+import AddressExtractor from "./AddressExtractor";
+
+const ViewContainer = styled.div``;
+
+const PageContainer = styled.div`
+  display: flex;
+`;
 
 /**
  * View.js
@@ -13,18 +21,19 @@ const Viewer = ({ pdf, ...props }) => {
 
   if (pdf) {
     return (
-      <div className="pdf-viewer">
-        { Array.apply(null, { length: numPages }).map(
-          (v, i) => (
+      <ViewContainer>
+        {Array.apply(null, { length: numPages }).map((v, i) => (
+          <PageContainer>
             <Page
               pdf={pdf}
               index={i + 1}
               key={`document-page-${i}`}
               {...props}
             />
-          )
-        )}
-      </div>
+            <AddressExtractor />
+          </PageContainer>
+        ))}
+      </ViewContainer>
     );
   }
 
