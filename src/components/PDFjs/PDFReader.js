@@ -6,6 +6,7 @@ import { Promise as resolve } from "q";
 import { __GRAY_200 } from "../../helpers/colors";
 import PDF from "./PDF";
 import { Viewer } from "./Viewer";
+import AddressExtractor from "./AddressExtractor";
 
 const Container = styled.div`
   width: 100%;
@@ -88,7 +89,6 @@ class PDFReader extends Component {
         {this.state.pdf ? (
           <SubContainer>
             <Viewer pdf={this.state.pdf} />
-
           </SubContainer>
         ) : null}
       </Container>

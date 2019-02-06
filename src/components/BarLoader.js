@@ -37,7 +37,6 @@ const FileName = styled.span`
 `;
 
 const BarLoader = ({ progress, name }) => {
-  console.log(progress);
   return (
     <Container>
       {name ? (

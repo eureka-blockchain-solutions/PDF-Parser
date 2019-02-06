@@ -5,6 +5,8 @@ const Container = styled.div`
   flex: 1;
 `;
 
+const Text = styled.div``;
+
 class AddressExtractor extends Component {
   constructor() {
     super();
@@ -14,7 +16,12 @@ class AddressExtractor extends Component {
   componentDidMount() {}
 
   render() {
-    return <Container>AddressExtractor Component {this.props.pageNr}</Container>;
+    return (
+      <Container>
+        AddressExtractor Component {this.props.pageNr}
+        <Text>{this.props.text}</Text>
+      </Container>
+    );
   }
 }
 
