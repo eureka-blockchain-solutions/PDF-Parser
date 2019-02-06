@@ -14,7 +14,7 @@ class AddressExtractor extends Component {
   componentDidMount() {}
 
   render() {
-    return <Container>AddressExtractor Component</Container>;
+    return <Container>AddressExtractor Component {this.props.pageNr}</Container>;
   }
 }
 

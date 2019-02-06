@@ -30,7 +30,7 @@ const Viewer = ({ pdf, ...props }) => {
               key={`document-page-${i}`}
               {...props}
             />
-            <AddressExtractor />
+            <AddressExtractor pageNr={i} />
           </PageContainer>
         ))}
       </ViewContainer>

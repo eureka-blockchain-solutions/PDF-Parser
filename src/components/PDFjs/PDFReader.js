@@ -88,7 +88,7 @@ class PDFReader extends Component {
         {this.state.pdf ? (
           <SubContainer>
             <Viewer pdf={this.state.pdf} />
-            {/*<AddressExtractor pdf={this.state.pdf} />*/}
+
           </SubContainer>
         ) : null}
       </Container>

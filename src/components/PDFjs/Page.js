@@ -59,7 +59,7 @@ class Page extends Component {
   }
 
   _renderPage(page) {
-    let scale = 1;
+    let scale = 1.5;
     let viewport = page.getViewport(scale);
 
     let width = viewport.width;
@@ -82,16 +82,9 @@ class Page extends Component {
   }
 
   render() {
-    let { width, height, status } = this.state;
-
-    console.log(this.state);
-
     return (
-      <CanvasContainer width={width} height={height}>
+      <CanvasContainer>
         <canvas ref={this.setCanvasRef} />
-        {this.state.status === "rendered" ? (
-          <canvas ref={this.getCanvasRef} />
-        ) : null}
       </CanvasContainer>
     );
   }
