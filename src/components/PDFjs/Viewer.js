@@ -27,7 +27,7 @@ class Viewer extends Component {
     const pagesPromises = [];
 
     for (let p = 1; p <= TOTAL_PAGES; p++) {
-      pagesPromises.push(this.getPageText(p, pdf));
+      pagesPromises.push(this.getSentenceMap(p, pdf));
     }
 
     const pages = await Promise.all(pagesPromises).then(pagesText => {
@@ -45,7 +45,7 @@ class Viewer extends Component {
    * @param {PDFDocument} PDFDocumentInstance The PDF document obtained
    * https://mozilla.github.io/pdf.js/api/draft/global.html#getTextContentParameters
    **/
-  getPageText(pageNum, PDFDocumentInstance) {
+  getSentenceMap(pageNum, PDFDocumentInstance) {
     // Return a Promise that is solved once the text of the page is retrieven
     return new Promise(function(resolve, reject) {
       PDFDocumentInstance.getPage(pageNum).then(pdfPage => {
@@ -57,28 +57,25 @@ class Viewer extends Component {
           })
           .then(function(textContent) {
             const textItems = textContent.items;
-            console.log(textContent);
 
-            // Concatenate the string of the item to the final string
-            let row = new Map();
-            let item = {};
+            let sentenceMap = new Map();
             for (let i = 0; i < textItems.length; i++) {
-              let oldItem = textItems[i];
-              const text = oldItem.str;
+              let item = textItems[i];
 
-              const tx = oldItem.transform;
+              const tx = item.transform;
               const fontSize = Math.sqrt(tx[2] * tx[2] + tx[3] * tx[3]);
 
-              let entrySentences = row.get(fontSize) ? row.get(fontSize) : [];
+              let entrySentences = sentenceMap.get(fontSize)
+                ? sentenceMap.get(fontSize)
+                : [];
               if (fontSize) {
-                entrySentences.push(text);
-                row.set(fontSize, entrySentences);
+                entrySentences.push(item);
+                sentenceMap.set(fontSize, entrySentences);
               }
             }
-            console.log(row);
-
+            console.log(sentenceMap);
             // Solve promise with the text retrieven from the page
-            resolve(row);
+            resolve(sentenceMap);
           });
       });
     });

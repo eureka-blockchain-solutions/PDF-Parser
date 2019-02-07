@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { __GRAY_500 } from "../../helpers/colors";
 
 /**
  * Page.js
@@ -8,6 +9,9 @@ import styled from "styled-components";
 
 const CanvasContainer = styled.div`
   flex: 1;
+  border-top: 1px solid ${__GRAY_500};
+  border-left: 1px solid ${__GRAY_500};
+  border-right: 1px dashed ${__GRAY_500};
 `;
 
 class Page extends Component {

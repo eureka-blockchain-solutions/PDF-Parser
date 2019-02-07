@@ -7,15 +7,17 @@ import { __GRAY_200 } from "../../helpers/colors";
 import PDF from "./PDF";
 import { Viewer } from "./Viewer";
 import AddressExtractor from "./AddressExtractor";
+import Summary from "./Summary";
 
 const Container = styled.div`
   width: 100%;
   max-width: 1160px;
-  border: 1px solid ${__GRAY_200};
+  border-right: 1px solid ${__GRAY_200};
 `;
 
 const SubContainer = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 class PDFReader extends Component {
@@ -31,7 +33,7 @@ class PDFReader extends Component {
           "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf";*/
 
     const url =
-      "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf"; //this.props.pdfs[0];
+      "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf"; // this.props.pdfs[0];
 
     // The workerSrc property shall be specified.
     PdfJs.GlobalWorkerOptions.workerSrc = WORKER_URL;
@@ -49,6 +51,7 @@ class PDFReader extends Component {
       <Container>
         {this.state.pdf ? (
           <SubContainer>
+            <Summary />
             <Viewer pdf={this.state.pdf} />
           </SubContainer>
         ) : null}

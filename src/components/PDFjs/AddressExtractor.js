@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import stringTokenizer from "string-punctuation-tokenizer";
+import { __ALERT_ERROR } from "../../helpers/colors";
 
 const Container = styled.div`
   flex: 1;
+  padding: 2rem;
+`;
+
+const Title = styled.h2`
+  color: ${__ALERT_ERROR};
 `;
 
 const Text = styled.div``;
@@ -14,11 +20,7 @@ class AddressExtractor extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-
-  }
-
-
+  componentDidMount() {}
 
   /**
    * Function that checks whether there are EKA addresses in the PAGE (using checksum and decoding function )
@@ -38,7 +40,7 @@ class AddressExtractor extends Component {
   render() {
     return (
       <Container>
-        AddressExtractor Component {this.props.pageNr}
+        <Title>Evaluating Page Number {this.props.pageNr}</Title>
         <Text>render something smart</Text>
       </Container>
     );
