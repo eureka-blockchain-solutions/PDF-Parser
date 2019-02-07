@@ -1,1 +1,3 @@
 export const NUMBER_OF_CHECKSUM_BYTES = 2;
+
+export const NUMBER_OF_EKA_CHARACTERS = 30;

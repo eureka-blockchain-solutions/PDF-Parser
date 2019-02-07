@@ -103,11 +103,11 @@ class Viewer extends Component {
     if (pdf && this.state.pages) {
       return (
         <ViewContainer>
-          {this.state.pages.map((text, i) => {
+          {this.state.pages.map((page, i) => {
             return (
               <PageContainer key={`document-page-${i}`}>
                 <Page pdf={pdf} index={i + 1} {...props} />
-                <AddressExtractor pageNr={i + 1} pages={this.state.pages} />
+                <AddressExtractor pageNr={i + 1} page={page} />
               </PageContainer>
             );
           })}

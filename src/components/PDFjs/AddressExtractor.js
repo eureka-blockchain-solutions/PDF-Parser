@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import stringTokenizer from "string-punctuation-tokenizer";
 import { __ALERT_ERROR } from "../../helpers/colors";
 import NamedEntities from "./NamedEntities";
+import nlp from "compromise";
+import { InitialPrefix } from "../../constants/Prefix";
+import { NUMBER_OF_EKA_CHARACTERS } from "../../helpers/ChecksumParameters";
+import { isCheckSum } from "../../helpers/base58";
 
 const Container = styled.div`
   flex: 1;
@@ -22,13 +25,47 @@ class AddressExtractor extends Component {
   }
 
   componentDidMount() {
-    const pages = this.props.pages;
+    const page = this.props.page;
+
+    const normalized = page.map(sentence => {
+      return this.normalizeSentences(sentence);
+    });
+
+    console.log(normalized);
   }
 
+  normalizeSentences(sentence) {
+    // EKA ADDRESSES DONT HAVE TO BE NORMALIZED!
+    if (!this.isEKA(sentence)) {
+      return nlp(sentence)
+        .normalize()
+        .out();
+    }
+
+    return sentence;
+  }
   /**
    * Function that checks whether there are EKA addresses in the PAGE (using checksum and decoding function )
    */
-  areThereEKAAddresses() {}
+  isEKA(sentence) {
+    return this.getEKA(sentence);
+  }
+
+  /**
+   * Function that returns a EKA address (if any). null otherwise
+   * @param string
+   */
+  getEKA(string) {
+    if (string.toString().includes(InitialPrefix)) {
+      const split = string.toString().split(InitialPrefix);
+      const EKAish = split[split.length - 1];
+      const EKA = EKAish.substr(0, NUMBER_OF_EKA_CHARACTERS);
+      if (isCheckSum(EKA)) {
+        return EKA;
+      }
+    }
+    return null;
+  }
 
   /**
    * Extract EKAAddresses
