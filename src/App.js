@@ -34,7 +34,7 @@ const Absolute = styled.div`
 
 const SubContainer = styled.div`
   max-width: ${DESKTOP_WIDTH}px;
-  margin: auto; 
+  margin: auto;
   align-self: center;
   justify-content: center;
   align-items: center;

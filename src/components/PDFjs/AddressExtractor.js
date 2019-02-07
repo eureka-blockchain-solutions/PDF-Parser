@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import stringTokenizer from "string-punctuation-tokenizer";
 
 const Container = styled.div`
   flex: 1;
@@ -14,10 +15,10 @@ class AddressExtractor extends Component {
   }
 
   componentDidMount() {
-    const tokens = this.props.text;
+
   }
 
-  tokenizePage() {}
+
 
   /**
    * Function that checks whether there are EKA addresses in the PAGE (using checksum and decoding function )
@@ -38,7 +39,7 @@ class AddressExtractor extends Component {
     return (
       <Container>
         AddressExtractor Component {this.props.pageNr}
-        <Text>{this.props.text}</Text>
+        <Text>render something smart</Text>
       </Container>
     );
   }

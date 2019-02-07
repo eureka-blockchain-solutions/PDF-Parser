@@ -28,10 +28,10 @@ class PDFReader extends Component {
     // If absolute URL from the remote server is provided, configure the CORS
     // header on that server.
     /*    const url =
-      "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf";*/
+          "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf";*/
 
     const url =
-      "https://s3.amazonaws.com/sosjournals/joujy4QT3l0bcHzLSelf-Contained_Proofs-IEEE-eka.pdf"; // this.props.pdfs[0];
+      "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf"; //this.props.pdfs[0];
 
     // The workerSrc property shall be specified.
     PdfJs.GlobalWorkerOptions.workerSrc = WORKER_URL;

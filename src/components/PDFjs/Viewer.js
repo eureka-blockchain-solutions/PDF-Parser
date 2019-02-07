@@ -32,7 +32,7 @@ class Viewer extends Component {
 
     const pages = await Promise.all(pagesPromises).then(pagesText => {
       // Display text of all the pages in the console
-      console.log(pagesText);
+
       return pagesText;
     });
 
@@ -56,16 +56,31 @@ class Viewer extends Component {
             disableCombineTextItems: true
           })
           .then(function(textContent) {
-            console.log(textContent);
             const textItems = textContent.items;
-            let finalString = "";
+            console.log(textContent);
 
             // Concatenate the string of the item to the final string
-            let row = [];
+            let row = new Map();
+            let item = {};
             for (let i = 0; i < textItems.length; i++) {
-              const item = textItems[i];
-              row.push(item.str);
+              let oldItem = textItems[i];
+              const text = oldItem.str;
+
+              const tx = oldItem.transform;
+              const fontSize = Math.sqrt(tx[2] * tx[2] + tx[3] * tx[3]);
+
+              let array = row.get(fontSize);
+              if (fontSize !== undefined) {
+                if (array) {
+                  array.push(text);
+                } else {
+                  array = [];
+                  array.push(text);
+                }
+                row.set(fontSize, array);
+              }
             }
+            console.log(row);
 
             // Solve promise with the text retrieven from the page
             resolve(row);
