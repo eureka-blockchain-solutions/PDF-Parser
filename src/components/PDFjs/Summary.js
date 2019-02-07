@@ -9,6 +9,7 @@ const Container = styled.div`
 
 const Title = styled.h2`
   color: ${__ALERT_ERROR};
+  text-transform: uppercase;
 `;
 
 const Body = styled.div``;

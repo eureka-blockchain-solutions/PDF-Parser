@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import stringTokenizer from "string-punctuation-tokenizer";
 import { __ALERT_ERROR } from "../../helpers/colors";
+import NamedEntities from "./NamedEntities";
 
 const Container = styled.div`
   flex: 1;
-  padding: 2rem;
+  padding: 0 2rem;
 `;
 
-const Title = styled.h2`
+const Title = styled.h3`
   color: ${__ALERT_ERROR};
 `;
 
@@ -20,7 +21,9 @@ class AddressExtractor extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const pages = this.props.pages;
+  }
 
   /**
    * Function that checks whether there are EKA addresses in the PAGE (using checksum and decoding function )
@@ -41,7 +44,7 @@ class AddressExtractor extends Component {
     return (
       <Container>
         <Title>Evaluating Page Number {this.props.pageNr}</Title>
-        <Text>render something smart</Text>
+        <NamedEntities>oasfjoajofs</NamedEntities>
       </Container>
     );
   }
