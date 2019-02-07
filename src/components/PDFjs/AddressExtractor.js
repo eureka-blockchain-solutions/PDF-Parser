@@ -6,6 +6,7 @@ import nlp from "compromise";
 import { InitialPrefix } from "../../constants/Prefix";
 import { NUMBER_OF_EKA_CHARACTERS } from "../../helpers/ChecksumParameters";
 import { isCheckSum } from "../../helpers/base58";
+import PulseSpinner from "../../views/spinners/PulseSpinner";
 
 const Container = styled.div`
   flex: 1;
@@ -21,20 +22,25 @@ const Text = styled.div``;
 class AddressExtractor extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = { entities: null };
   }
 
   componentDidMount() {
     const page = this.props.page;
-
-    const normalized = page.map(sentence => {
-      return this.normalizeSentences(sentence);
+    let entities = [];
+    page.map(sentence => {
+      // sentence = this.normalizeSentence(sentence);
+      const ent = this.extractEntities(sentence);
+      if (ent) {
+        entities.push(ent);
+      }
     });
-
-    console.log(normalized);
+    if (entities.length > 0) {
+      this.setState({ entities });
+    }
   }
 
-  normalizeSentences(sentence) {
+  normalizeSentence(sentence) {
     // EKA ADDRESSES DONT HAVE TO BE NORMALIZED!
     if (!this.isEKA(sentence)) {
       return nlp(sentence)
@@ -44,6 +50,17 @@ class AddressExtractor extends Component {
 
     return sentence;
   }
+
+  // Named-entities: - get the people, places, organizations:
+  extractEntities(sentence) {
+    const entities = nlp(sentence)
+      .people()
+      .data();
+
+    if (entities.length > 0) return entities;
+    return null;
+  }
+
   /**
    * Function that checks whether there are EKA addresses in the PAGE (using checksum and decoding function )
    */
@@ -81,7 +98,11 @@ class AddressExtractor extends Component {
     return (
       <Container>
         <Title>Evaluating Page Number {this.props.pageNr}</Title>
-        <NamedEntities>oasfjoajofs</NamedEntities>
+        {this.state.entities ? (
+          <NamedEntities entities={this.state.entities} />
+        ) : (
+          <PulseSpinner />
+        )}
       </Container>
     );
   }
