@@ -69,15 +69,10 @@ class Viewer extends Component {
               const tx = oldItem.transform;
               const fontSize = Math.sqrt(tx[2] * tx[2] + tx[3] * tx[3]);
 
-              let array = row.get(fontSize);
-              if (fontSize !== undefined) {
-                if (array) {
-                  array.push(text);
-                } else {
-                  array = [];
-                  array.push(text);
-                }
-                row.set(fontSize, array);
+              let entrySentences = row.get(fontSize) ? row.get(fontSize) : [];
+              if (fontSize) {
+                entrySentences.push(text);
+                row.set(fontSize, entrySentences);
               }
             }
             console.log(row);
