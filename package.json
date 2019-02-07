@@ -5,6 +5,7 @@
   "dependencies": {
     "bs58": "^4.0.1",
     "chroma-js": "^2.0.2",
+    "compromise": "^11.13.1",
     "pdfjs-dist": "^2.0.943",
     "randomstring": "^1.1.5",
     "react": "^16.7.0",
