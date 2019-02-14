@@ -4,10 +4,7 @@ import styled from "styled-components";
 // Components
 import { Page } from "./Page";
 import AddressExtractor from "./AddressExtractor";
-import * as PropTypes from "prop-types";
-import * as PdfJs from "pdfjs-dist";
 import EurekaRotateSpinner from "../../views/spinners/EurekaRotateSpinner";
-import EurekaSpinner from "../../views/spinners/EurekaSpinner";
 
 const ViewContainer = styled.div``;
 
@@ -117,7 +114,5 @@ class Viewer extends Component {
     return <EurekaRotateSpinner width={150} height={150} />;
   }
 }
-
-Viewer.propTypes = { pdf: PropTypes.any };
 
 export { Viewer };

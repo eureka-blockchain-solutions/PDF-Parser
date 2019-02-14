@@ -7,6 +7,8 @@ import { InitialPrefix } from "../../constants/Prefix";
 import { NUMBER_OF_EKA_CHARACTERS } from "../../helpers/ChecksumParameters";
 import { isCheckSum } from "../../helpers/base58";
 import PulseSpinner from "../../views/spinners/PulseSpinner";
+import { STOP_WORDS } from "../../data/StopWords";
+import { ALL_NAMES } from "../../data/AllNames";
 
 const Container = styled.div`
   flex: 1;
@@ -29,16 +31,46 @@ class AddressExtractor extends Component {
     const page = this.props.page;
     let entities = [];
     page.map(sentence => {
-      // sentence = this.normalizeSentence(sentence);
-      const ent = this.extractEntities(sentence);
-      if (ent) {
-        entities.push(ent);
-      }
+      sentence.split("and ").map(s => {
+        s.split(",").map(r => {
+          // check if there is a string that sounds like a name
+          // const i = ALL_NAMES.findIndex(v => v.includes());
+
+          let entity = this.extractEntities(r);
+          if (entity) {
+            entities.push(entity);
+          } else {
+            let guessedEntities = [];
+
+            // TODO: suggest strings that starts with common english first names
+            const splitWhiteSpace = r.trim().split(" ");
+            const NUMBER_OF_WORDS_FOR_NAME = 3;
+            ALL_NAMES.forEach(name => {
+              if (
+                splitWhiteSpace.includes(name) &&
+                splitWhiteSpace.length <= NUMBER_OF_WORDS_FOR_NAME
+              ) {
+                entities.push([
+                  {
+                    firstName: null,
+                    lastName: null,
+                    text: r
+                  }
+                ]);
+              }
+            });
+          }
+        });
+      });
     });
     if (entities.length > 0) {
       this.setState({ entities });
     }
   }
+
+  removeCommas(sentence) {}
+
+  removeWellKnownEnglishWords(sentence) {}
 
   normalizeSentence(sentence) {
     // EKA ADDRESSES DONT HAVE TO BE NORMALIZED!
@@ -100,9 +132,7 @@ class AddressExtractor extends Component {
         <Title>Evaluating Page Number {this.props.pageNr}</Title>
         {this.state.entities ? (
           <NamedEntities entities={this.state.entities} />
-        ) : (
-          <PulseSpinner />
-        )}
+        ) : null}
       </Container>
     );
   }

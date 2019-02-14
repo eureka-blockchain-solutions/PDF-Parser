@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { __ALERT_ERROR } from "../../helpers/colors";
+import Guess from "./Guess";
+import Confirmed from "./Confirmed";
 
 const Container = styled.div`
   width: 100%;
@@ -18,7 +20,10 @@ const Summary = () => {
   return (
     <Container>
       <Title>Summary Functional Component</Title>
-      <Body>TODO</Body>
+      <Body>
+        <Guess />
+        <Confirmed />
+      </Body>
     </Container>
   );
 };

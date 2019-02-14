@@ -63,7 +63,7 @@ class Page extends Component {
   }
 
   _renderPage(page) {
-    let scale = 1;
+    let scale = 1.3;
     let viewport = page.getViewport(scale);
 
     let width = viewport.width;

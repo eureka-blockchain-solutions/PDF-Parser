@@ -5,7 +5,6 @@ import Entity from "./Entity";
 const Container = styled.div``;
 
 const NamedEntities = ({ entities }) => {
-  console.log(entities);
   return (
     <Container>
       {entities.map(array => {
