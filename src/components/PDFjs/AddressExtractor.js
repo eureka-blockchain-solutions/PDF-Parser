@@ -33,16 +33,10 @@ class AddressExtractor extends Component {
     page.map(sentence => {
       sentence.split("and ").map(s => {
         s.split(",").map(r => {
-          // check if there is a string that sounds like a name
-          // const i = ALL_NAMES.findIndex(v => v.includes());
-
           let entity = this.extractEntities(r);
           if (entity) {
             entities.push(entity);
           } else {
-            let guessedEntities = [];
-
-            // TODO: suggest strings that starts with common english first names
             const splitWhiteSpace = r.trim().split(" ");
             const NUMBER_OF_WORDS_FOR_NAME = 3;
             ALL_NAMES.forEach(name => {

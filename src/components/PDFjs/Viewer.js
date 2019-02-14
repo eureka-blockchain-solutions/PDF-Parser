@@ -15,7 +15,7 @@ const PageContainer = styled.div`
 class Viewer extends Component {
   constructor() {
     super();
-    this.state = { pages: null };
+    this.state = { pages: null, sentenceMap: null };
   }
 
   async componentDidMount() {
@@ -29,12 +29,21 @@ class Viewer extends Component {
       pagesPromises.push(this.getTextContent(p, pdf));
     }
 
-    const pages = await Promise.all(pagesPromises).then(pagesText => {
-      // Display text of all the pages in the console
-      return pagesText;
+    const pageObjects = await Promise.all(pagesPromises).then(obj => {
+      return obj;
     });
 
-    this.setState({ pages });
+    this.setState({
+      pages: pageObjects.map(page => {
+        return page.text;
+      }),
+      sentenceMaps: pageObjects.map(page => {
+        return page.sentenceMap;
+      })
+    });
+
+    //     console.log(pageObjects);
+    // this.setState({ pages });
   }
 
   /**
@@ -47,7 +56,7 @@ class Viewer extends Component {
   getTextContent(pageNum, PDFDocumentInstance) {
     // Return a Promise that is solved once the text of the page is retrieven
     const that = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       PDFDocumentInstance.getPage(pageNum).then(pdfPage => {
         // The main trick to obtain the text of the PDF page, use the getTextContent method
         pdfPage
@@ -57,9 +66,10 @@ class Viewer extends Component {
           })
           .then(textContent => {
             const textItems = textContent.items;
-            const map = that.getMap(textItems);
+            const sentenceMap = that.getMap(textItems);
             const text = that.getText(textItems);
-            resolve(text);
+            let obj = { sentenceMap, text, pageNum };
+            resolve(obj);
           });
       });
     });
