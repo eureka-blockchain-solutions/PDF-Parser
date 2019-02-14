@@ -111,7 +111,11 @@ class Viewer extends Component {
             return (
               <PageContainer key={`document-page-${i}`}>
                 <Page pdf={pdf} index={i + 1} {...props} />
-                <AddressExtractor pageNr={i + 1} page={page} />
+                <AddressExtractor
+                  pageNr={i + 1}
+                  page={page}
+                  sentenceMap={this.state.sentenceMap}
+                />
               </PageContainer>
             );
           })}

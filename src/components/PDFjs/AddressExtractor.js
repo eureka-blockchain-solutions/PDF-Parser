@@ -29,6 +29,7 @@ class AddressExtractor extends Component {
 
   componentDidMount() {
     const page = this.props.page;
+    const MAX_NUMBER_OF_WORDS_FOR_NAME = 3;
     let entities = [];
     page.map(sentence => {
       sentence
@@ -39,16 +40,16 @@ class AddressExtractor extends Component {
           if (entity) {
             entities.push(entity);
           } else {
-            const splitWhiteSpace = token.split(" ");
-            const NUMBER_OF_WORDS_FOR_NAME = 3;
-            ALL_NAMES.forEach(name => {
+            const array = token.split(" ");
+            array.map(name => {
               if (
-                splitWhiteSpace.includes(name) &&
-                splitWhiteSpace.length <= NUMBER_OF_WORDS_FOR_NAME
+                ALL_NAMES.includes(name) &&
+                array.length <= MAX_NUMBER_OF_WORDS_FOR_NAME &&
+                this.isFirstLetterCapitalized(name)
               ) {
                 entities.push([
                   {
-                    firstName: null,
+                    firstName: name,
                     lastName: null,
                     text: token
                   }
@@ -61,6 +62,13 @@ class AddressExtractor extends Component {
     if (entities.length > 0) {
       this.setState({ entities });
     }
+  }
+
+  isFirstLetterCapitalized(word) {
+    if (word.length > 0) {
+      return word[0] === word[0].toUpperCase();
+    }
+    return false;
   }
 
   // Named-entities: - get the people, places, organizations:
