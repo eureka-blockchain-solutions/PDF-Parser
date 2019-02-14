@@ -31,13 +31,15 @@ class AddressExtractor extends Component {
     const page = this.props.page;
     let entities = [];
     page.map(sentence => {
-      sentence.split("and ").map(s => {
-        s.split(",").map(r => {
-          let entity = this.extractEntities(r);
+      sentence
+        .split(/,|and /g)
+        .map(s => s.toString().trim())
+        .map(token => {
+          let entity = this.extractEntities(token);
           if (entity) {
             entities.push(entity);
           } else {
-            const splitWhiteSpace = r.trim().split(" ");
+            const splitWhiteSpace = token.split(" ");
             const NUMBER_OF_WORDS_FOR_NAME = 3;
             ALL_NAMES.forEach(name => {
               if (
@@ -48,33 +50,17 @@ class AddressExtractor extends Component {
                   {
                     firstName: null,
                     lastName: null,
-                    text: r
+                    text: token
                   }
                 ]);
               }
             });
           }
         });
-      });
     });
     if (entities.length > 0) {
       this.setState({ entities });
     }
-  }
-
-  removeCommas(sentence) {}
-
-  removeWellKnownEnglishWords(sentence) {}
-
-  normalizeSentence(sentence) {
-    // EKA ADDRESSES DONT HAVE TO BE NORMALIZED!
-    if (!this.isEKA(sentence)) {
-      return nlp(sentence)
-        .normalize()
-        .out();
-    }
-
-    return sentence;
   }
 
   // Named-entities: - get the people, places, organizations:
@@ -109,16 +95,6 @@ class AddressExtractor extends Component {
     }
     return null;
   }
-
-  /**
-   * Extract EKAAddresses
-   */
-  extractEKAAddresses() {}
-
-  /*Automation extraction from PDF for author names always need a manual check from the user*/
-  tryToFindAuthorNames() {}
-
-  makeSuggestionsForAuthorNames() {}
 
   render() {
     return (

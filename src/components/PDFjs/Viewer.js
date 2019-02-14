@@ -37,13 +37,10 @@ class Viewer extends Component {
       pages: pageObjects.map(page => {
         return page.text;
       }),
-      sentenceMaps: pageObjects.map(page => {
+      sentenceMap: pageObjects.map(page => {
         return page.sentenceMap;
       })
     });
-
-    //     console.log(pageObjects);
-    // this.setState({ pages });
   }
 
   /**
@@ -106,8 +103,8 @@ class Viewer extends Component {
 
   render() {
     let { pdf, ...props } = this.props;
-
-    if (pdf && this.state.pages) {
+    console.log(this.state.sentenceMap);
+    if (pdf && this.state.pages && this.state.sentenceMap) {
       return (
         <ViewContainer>
           {this.state.pages.map((page, i) => {
