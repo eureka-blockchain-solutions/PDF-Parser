@@ -6,7 +6,6 @@ import Confirmed from "./Confirmed";
 
 const Container = styled.div`
   width: 100%;
-  padding: 2rem;
 `;
 
 const Title = styled.h2`
@@ -14,9 +13,13 @@ const Title = styled.h2`
   text-transform: uppercase;
 `;
 
-const Body = styled.div``;
+const Body = styled.div`
+  display: flex;
+`;
 
-const Summary = () => {
+const Summary = ({ entities }) => {
+  const normalized = entities.map(e => e[0]);
+  console.log(normalized);
   return (
     <Container>
       <Title>Summary Functional Component</Title>

@@ -76,8 +76,7 @@ class Viewer extends Component {
     let sentences = [];
     for (let i = 0; i < textItems.length; i++) {
       const item = textItems[i];
-      const text = item.str;
-      sentences.push(text);
+      sentences.push(item);
     }
     return sentences;
   }
@@ -103,7 +102,6 @@ class Viewer extends Component {
 
   render() {
     let { pdf, ...props } = this.props;
-    console.log(this.state.sentenceMap);
     if (pdf && this.state.pages && this.state.sentenceMap) {
       return (
         <ViewContainer>
@@ -115,6 +113,10 @@ class Viewer extends Component {
                   pageNr={i + 1}
                   page={page}
                   sentenceMap={this.state.sentenceMap}
+                  entities={this.props.entities}
+                  setEntities={entities => {
+                    this.props.setEntities(entities);
+                  }}
                 />
               </PageContainer>
             );

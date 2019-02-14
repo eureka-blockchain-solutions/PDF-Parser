@@ -6,8 +6,6 @@ import nlp from "compromise";
 import { InitialPrefix } from "../../constants/Prefix";
 import { NUMBER_OF_EKA_CHARACTERS } from "../../helpers/ChecksumParameters";
 import { isCheckSum } from "../../helpers/base58";
-import PulseSpinner from "../../views/spinners/PulseSpinner";
-import { STOP_WORDS } from "../../data/StopWords";
 import { ALL_NAMES } from "../../data/AllNames";
 
 const Container = styled.div`
@@ -24,7 +22,6 @@ const Text = styled.div``;
 class AddressExtractor extends Component {
   constructor() {
     super();
-    this.state = { entities: null };
   }
 
   componentDidMount() {
@@ -32,7 +29,8 @@ class AddressExtractor extends Component {
     const MAX_NUMBER_OF_WORDS_FOR_NAME = 3;
     let entities = [];
     page.map(sentence => {
-      sentence
+      let text = sentence.str;
+      text
         .split(/,|and /g)
         .map(s => s.toString().trim())
         .map(token => {
@@ -59,8 +57,9 @@ class AddressExtractor extends Component {
           }
         });
     });
-    if (entities.length > 0) {
-      this.setState({ entities });
+    // TODO: do it dynamically --> for now just consider the first page for main authors
+    if (entities.length > 0 && this.props.pageNr === 1) {
+      this.props.setEntities(entities);
     }
   }
 
@@ -108,8 +107,8 @@ class AddressExtractor extends Component {
     return (
       <Container>
         <Title>Evaluating Page Number {this.props.pageNr}</Title>
-        {this.state.entities ? (
-          <NamedEntities entities={this.state.entities} />
+        {this.props.entities ? (
+          <NamedEntities entities={this.props.entities} />
         ) : null}
       </Container>
     );
