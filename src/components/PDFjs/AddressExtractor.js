@@ -82,7 +82,12 @@ class AddressExtractor extends Component {
   }
 
   areSpecificNameRequirementsSatisfied(name) {
-    return ALL_NAMES.includes(name);
+    return (
+      ALL_NAMES.includes(name.substr(0, name.length - 3)) ||
+      ALL_NAMES.includes(name.substr(0, name.length - 2)) ||
+      ALL_NAMES.includes(name.substr(0, name.length - 1)) ||
+      ALL_NAMES.includes(name)
+    );
   }
 
   areFirstLettersCapitalized(array) {
