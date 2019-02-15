@@ -36,7 +36,7 @@ class AddressExtractor extends Component {
 
   findAllEntities() {
     const page = this.props.page;
-    const MAX_NUMBER_OF_WORDS_FOR_NAME = 3;
+
     let entities = [];
     page.map(sentence => {
       let text = sentence.str;
@@ -49,33 +49,54 @@ class AddressExtractor extends Component {
             entities.push(entity);
           } else {
             const array = token.split(" ");
-            array.map(name => {
-              if (
-                ALL_NAMES.includes(name) &&
-                array.length <= MAX_NUMBER_OF_WORDS_FOR_NAME &&
-                this.isFirstLetterCapitalized(name)
-              ) {
-                entities.push([
-                  {
-                    firstName: name,
-                    lastName: null,
-                    text: token
-                  }
-                ]);
-                console.log(entities);
-              }
-            });
+
+            // array has at least 2 entries, first letters of each entry are capitalized, ALL_NAMES includes the
+            if (this.areGeneralNameRequirementsSatisfied(array)) {
+              array.forEach(name => {
+                if (this.areSpecificNameRequirementsSatisfied(name)) {
+                  // join rest of the array starting from position 1
+                  const lastName = array.splice(1).join(" ");
+                  entities.push([
+                    {
+                      firstName: array[0],
+                      lastName,
+                      text: token
+                    }
+                  ]);
+                }
+              });
+            }
           }
         });
     });
     return entities;
   }
 
-  isFirstLetterCapitalized(word) {
-    if (word.length > 0) {
-      return word[0] === word[0].toUpperCase();
+  areGeneralNameRequirementsSatisfied(array) {
+    const MAX_NUMBER_OF_WORDS_FOR_NAME = 3;
+    return (
+      this.areFirstLettersCapitalized(array) &&
+      array.length > 1 &&
+      array.length <= MAX_NUMBER_OF_WORDS_FOR_NAME
+    );
+  }
+
+  areSpecificNameRequirementsSatisfied(name) {
+    return ALL_NAMES.includes(name);
+  }
+
+  areFirstLettersCapitalized(array) {
+    let flag = true;
+    for (let i = 0; i < array.length; i++) {
+      if (!this.isFirstLetterCapitalized(array[i], i)) {
+        flag = false;
+      }
     }
-    return false;
+    return flag;
+  }
+
+  isFirstLetterCapitalized(word) {
+    return /[A-Z]/.test(word);
   }
 
   // Named-entities: - get the people, places, organizations:
