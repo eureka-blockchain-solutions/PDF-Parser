@@ -19,12 +19,11 @@ const Body = styled.div`
 
 const Summary = ({ entities }) => {
   const normalized = entities.map(e => e[0]);
-  console.log(normalized);
   return (
     <Container>
       <Title>Summary Functional Component</Title>
       <Body>
-        <Guess />
+        <Guess entities={normalized} />
         <Confirmed />
       </Body>
     </Container>

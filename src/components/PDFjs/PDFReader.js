@@ -33,7 +33,7 @@ class PDFReader extends Component {
           "https://s3.amazonaws.com/sosjournals/0DelhOhVxcKXaqJXSelf-Contained_Proofs-IEEE-eka.pdf";*/
 
     const url =
-      "https://s3.amazonaws.com/sosjournals/jzAZn5UGWJF52gFVPID3148559.pdf"; //this.props.pdfs[0];
+      "https://s3.amazonaws.com/sosjournals/3czRZ8jnAerVEPKzREADME.pdf"; //this.props.pdfs[0];
 
     // The workerSrc property shall be specified.
     PdfJs.GlobalWorkerOptions.workerSrc = WORKER_URL;

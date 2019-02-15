@@ -25,6 +25,16 @@ class AddressExtractor extends Component {
   }
 
   componentDidMount() {
+    // consider just the first page for main authors
+    if (this.props.pageNr === 1) {
+      const entities = this.findAllEntities();
+      if (entities.length > 0) {
+        this.props.setEntities(entities);
+      }
+    }
+  }
+
+  findAllEntities() {
     const page = this.props.page;
     const MAX_NUMBER_OF_WORDS_FOR_NAME = 3;
     let entities = [];
@@ -52,15 +62,13 @@ class AddressExtractor extends Component {
                     text: token
                   }
                 ]);
+                console.log(entities);
               }
             });
           }
         });
     });
-    // TODO: do it dynamically --> for now just consider the first page for main authors
-    if (entities.length > 0 && this.props.pageNr === 1) {
-      this.props.setEntities(entities);
-    }
+    return entities;
   }
 
   isFirstLetterCapitalized(word) {

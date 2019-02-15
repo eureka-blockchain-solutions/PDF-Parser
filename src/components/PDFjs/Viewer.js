@@ -38,6 +38,7 @@ class Viewer extends Component {
         return page.text;
       }),
       sentenceMap: pageObjects.map(page => {
+        console.log(page.sentenceMap);
         return page.sentenceMap;
       })
     });
