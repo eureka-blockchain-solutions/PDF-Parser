@@ -49,27 +49,24 @@ class Summary extends Component {
     this.setState({ guessedFields });
   }
 
-  updateFields(key, id, value) {
-    const guessedFields = [...this.state.guessedFields];
-    const field = guessedFields.find(f => f.id === id);
+  updateFields(list, key, id, value) {
+    const field = list.find(f => f.id === id);
     field[key] = value;
-    this.setState({ guessedFields });
+    this.setState({ list });
   }
 
-  addField() {
-    let guessedFields = [...this.state.guessedFields];
-    guessedFields.push({
+  addField(key, list) {
+    list.push({
       fName: "",
       lName: "",
       id: uuidv1()
     });
-    this.setState({ guessedFields });
+    this.setState({ [key]: list });
   }
 
-  removeField(id) {
-    let fields = [...this.state.guessedFields];
+  removeField(key, list, id) {
     this.setState({
-      guessedFields: fields.filter(f => f.id !== id)
+      [key]: list.filter(f => f.id !== id)
     });
   }
 
@@ -84,13 +81,17 @@ class Summary extends Component {
               this.removeField(id);
             }}
             onAdd={() => {
-              this.addField();
+              this.addField("guessedFields", [...this.state.guessedFields]);
             }}
             onDelete={id => {
-              this.removeField(id);
+              this.removeField(
+                "guessedFields",
+                [...this.state.guessedFields],
+                id
+              );
             }}
             onChange={(key, id, value) => {
-              this.updateFields(key, id, value);
+              this.updateFields([...this.state.guessedFields], key, id, value);
             }}
           />
           <Confirmed />
