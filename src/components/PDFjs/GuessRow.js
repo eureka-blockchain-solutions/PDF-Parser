@@ -17,17 +17,17 @@ const Label = styled.label`
   font-weight: bold;
 `;
 
-const GuessRow = ({ entity, ...otherProps }) => {
-  const fName = entity.firstName;
-  const lName = entity.lastName;
+const GuessRow = ({ field, ...otherProps }) => {
+  const fName = field.fName;
+  const lName = field.lName;
   return (
     <Container>
       <InputContainer>
         <Label>First Name</Label>
         <InputField
-          value={fName ? fName.charAt(0).toUpperCase() + fName.slice(1) : ""}
+          value={fName}
           onChange={e => {
-            // TODO: Update the value of this field dynamically
+            otherProps.onChange("fName", field.index, e.target.value);
           }}
           status={""}
           placeholder={"First Name"}
@@ -36,9 +36,9 @@ const GuessRow = ({ entity, ...otherProps }) => {
       <InputContainer>
         <Label>Last Name</Label>
         <InputField
-          value={lName ? lName.charAt(0).toUpperCase() + lName.slice(1) : ""}
+          value={lName}
           onChange={e => {
-            // TODO: Update the value of this field dynamically
+            otherProps.onChange("lName", field.index, e.target.value);
           }}
           status={""}
           placeholder={"Last Name"}
