@@ -7,6 +7,7 @@ import { InitialPrefix } from "../../constants/Prefix";
 import { NUMBER_OF_EKA_CHARACTERS } from "../../helpers/ChecksumParameters";
 import { isCheckSum } from "../../helpers/base58";
 import { ALL_NAMES } from "../../data/AllNames";
+import { TWENTY_K_ENGLISH_WORDS } from "../../data/EnglishWords";
 
 const Container = styled.div`
   flex: 1;
@@ -50,7 +51,7 @@ class AddressExtractor extends Component {
           } else {
             const array = token.split(" ");
 
-            // array has at least 2 entries, first letters of each entry are capitalized, ALL_NAMES includes the
+            // array has at least 2 entries, first letters of each entry are capitalized, ALL_NAMES includes the given token
             if (this.areGeneralNameRequirementsSatisfied(array)) {
               array.forEach(name => {
                 if (this.areSpecificNameRequirementsSatisfied(name)) {
@@ -81,13 +82,22 @@ class AddressExtractor extends Component {
     );
   }
 
+  //TODO: search for common english words and excludes these names that are in that list
+
   areSpecificNameRequirementsSatisfied(name) {
     return (
-      ALL_NAMES.includes(name.substr(0, name.length - 3)) ||
-      ALL_NAMES.includes(name.substr(0, name.length - 2)) ||
-      ALL_NAMES.includes(name.substr(0, name.length - 1)) ||
-      ALL_NAMES.includes(name)
+      (ALL_NAMES.includes(name.substr(0, name.length - 3)) ||
+        ALL_NAMES.includes(name.substr(0, name.length - 2)) ||
+        ALL_NAMES.includes(name.substr(0, name.length - 1)) ||
+        ALL_NAMES.includes(name)) &&
+      !TWENTY_K_ENGLISH_WORDS.includes(name.toLowerCase()) &&
+      this.areAllLetters(name)
     );
+  }
+
+  areAllLetters(name) {
+    const letters = /^[A-Za-z]+$/;
+    return name.match(letters);
   }
 
   areFirstLettersCapitalized(array) {
