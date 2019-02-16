@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { InputField } from "../../views/design-components/Inputs";
+import Icon from "../../views/icons/Icon";
+import { __ALERT_ERROR, __ALERT_SUCCESS } from "../../helpers/colors";
 
 const Container = styled.div`
   display: flex;
@@ -15,6 +17,26 @@ const InputContainer = styled.div`
 const Label = styled.label`
   font-size: 10px;
   font-weight: bold;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  margin-top: 25px;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+`;
+
+const Confirm = styled.div`
+  background: ${__ALERT_SUCCESS};
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 9px;
+  cursor: pointer;
+  letter-spacing: 0.8px;
 `;
 
 const GuessRow = ({ field, ...otherProps }) => {
@@ -44,6 +66,21 @@ const GuessRow = ({ field, ...otherProps }) => {
           placeholder={"Last Name"}
         />
       </InputContainer>
+
+      <IconContainer
+        onClick={() => {
+          otherProps.onDelete(field.id);
+        }}
+      >
+        <Icon icon={"delete"} width={10} height={10} color={__ALERT_ERROR} />
+        <Confirm
+          onClick={() => {
+            otherProps.confirmAuthor(field.id);
+          }}
+        >
+          Confirm
+        </Confirm>
+      </IconContainer>
     </Container>
   );
 };
