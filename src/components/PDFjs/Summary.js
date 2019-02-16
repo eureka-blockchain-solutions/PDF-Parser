@@ -6,6 +6,7 @@ import Confirmed from "./Confirmed";
 
 const Container = styled.div`
   width: 100%;
+  margin-bottom: 2rem;
 `;
 
 const Title = styled.h2`

@@ -47,10 +47,12 @@ class AddressExtractor extends Component {
         .map(token => {
           let entity = this.extractEntities(token);
           if (entity) {
-            entities.push(entity);
+            if (entity[0].firstName && entity[0].lastName) {
+              entities.push(entity);
+            }
           } else {
             const array = token.split(" ");
-
+            console.log(array);
             // array has at least 2 entries, first letters of each entry are capitalized, ALL_NAMES includes the given token
             if (this.areGeneralNameRequirementsSatisfied(array)) {
               array.forEach(name => {
