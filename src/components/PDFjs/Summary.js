@@ -85,7 +85,7 @@ class Summary extends Component {
       .then(async response => {
         if (response.success) {
           if (response.data) {
-            return response.data.ethereumAddress;
+            return response.data;
           }
           return null;
         }
@@ -111,12 +111,22 @@ class Summary extends Component {
               );
 
               if (field) {
-                let ethAddress = await this.fetchAuthorInformation(field);
+                let user = await this.fetchAuthorInformation(field);
+                let personal = {};
+
+                if (user) {
+                  personal = {
+                    ethAddress: user.ethereumAddress,
+                    avatar: user.avatar,
+                    email: user.email
+                  };
+                }
+
                 this.addField(
                   "confirmedFields",
                   [...this.state.confirmedFields],
                   {
-                    ethAddress,
+                    personal,
                     fName: field.fName,
                     lName: field.lName,
                     id: uuidv1()
