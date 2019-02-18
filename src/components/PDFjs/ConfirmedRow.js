@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { __ALERT_ERROR } from "../../helpers/colors";
 import Icon from "../../views/icons/Icon";
 
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -19,11 +20,18 @@ const Delete = styled.div`
 `;
 
 export const ConfirmedRow = ({ field, index, ...otherProps }) => {
+  console.log(field);
+
   return (
     <Container>
       <NamesContainer>
         {index + 1}) {field.fName} {field.lName}
       </NamesContainer>
+      {field.ethAddress ? (
+        <a href={field.ethAddress}>{field.ethAddress}</a>
+      ) : (
+        <i>'No User found'</i>
+      )}
       <Delete>
         <Icon
           icon={"delete"}

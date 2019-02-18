@@ -112,7 +112,6 @@ class Summary extends Component {
 
               if (field) {
                 let ethAddress = await this.fetchAuthorInformation(field);
-                console.log(ethAddress);
                 this.addField(
                   "confirmedFields",
                   [...this.state.confirmedFields],
