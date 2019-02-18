@@ -5,7 +5,9 @@ import Guess from "./Guess";
 import Confirmed from "./Confirmed";
 import * as PropTypes from "prop-types";
 import uuidv1 from "uuid";
+import queryString from "querystring";
 import GuessRow from "./GuessRow";
+import { getDomain } from "../../helpers/getDomain";
 
 const Container = styled.div`
   width: 100%;
@@ -70,6 +72,29 @@ class Summary extends Component {
     });
   }
 
+  fetchAuthorInformation(field) {
+    let url = queryString.stringify(field);
+    return fetch(`${getDomain()}/api/users?${url}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include"
+    })
+      .then(response => response.json())
+      .then(async response => {
+        if (response.success) {
+          if (response.data) {
+            return response.data.ethereumAddress;
+          }
+          return null;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   render() {
     return (
       <Container>
@@ -77,7 +102,7 @@ class Summary extends Component {
         <Body>
           <Guess
             guessedFields={this.state.guessedFields}
-            confirmAuthor={id => {
+            confirmAuthor={async id => {
               let field = this.state.guessedFields.find(f => f.id === id);
               this.removeField(
                 "guessedFields",
@@ -86,10 +111,13 @@ class Summary extends Component {
               );
 
               if (field) {
+                let ethAddress = await this.fetchAuthorInformation(field);
+                console.log(ethAddress);
                 this.addField(
                   "confirmedFields",
                   [...this.state.confirmedFields],
                   {
+                    ethAddress,
                     fName: field.fName,
                     lName: field.lName,
                     id: uuidv1()

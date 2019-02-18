@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { __ALERT_INFO, __ALERT_SUCCESS } from "../../helpers/colors";
 import { ConfirmedRow } from "./ConfirmedRow";
+import queryString from "querystring";
+import { getDomain } from "../../helpers/getDomain";
 
 const Container = styled.div`
   flex: 1;
@@ -24,6 +26,33 @@ class Confirmed extends Component {
 
   componentDidMount() {}
 
+  /*componentDidUpdate(prevProps, prevState) {
+    if (prevProps.fields !== this.props.fields) {
+      if (this.props.fields.length > 0) {
+        let url = "";
+        this.props.fields.forEach(f => {
+          url += queryString.stringify(f);
+        });
+
+        console.log(url);
+        fetch(`${getDomain()}/api/users?${url}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include"
+        })
+          .then(response => response.json())
+          .then(async response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
+    }
+  }
+*/
   render() {
     return (
       <Container>
