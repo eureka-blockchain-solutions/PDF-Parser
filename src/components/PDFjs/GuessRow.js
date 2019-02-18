@@ -19,12 +19,24 @@ const Label = styled.label`
   font-weight: bold;
 `;
 
-const IconContainer = styled.div`
+const IconsContainer = styled.div`
   display: flex;
-  margin-top: 25px;
+  margin-top: 23px;
   align-items: center;
+  margin-left: 8px;
   justify-content: space-around;
-  flex-direction: column;
+`;
+
+const IContainer = styled.div`
+  width: 22px;
+  height: 22px;
+  background: ${__ALERT_ERROR};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-right: 10px;
 `;
 
 const Confirm = styled.div`
@@ -34,8 +46,9 @@ const Confirm = styled.div`
   color: white;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 9px;
+  font-size: 8px;
   cursor: pointer;
+  line-height: 2.4;
   letter-spacing: 0.8px;
 `;
 
@@ -67,20 +80,22 @@ const GuessRow = ({ field, ...otherProps }) => {
         />
       </InputContainer>
 
-      <IconContainer
+      <IconsContainer
         onClick={() => {
           otherProps.onDelete(field.id);
         }}
       >
-        <Icon icon={"delete"} width={10} height={10} color={__ALERT_ERROR} />
+        <IContainer>
+          <Icon icon={"delete"} width={10} height={10} color={"white"} />
+        </IContainer>
         <Confirm
           onClick={() => {
             otherProps.confirmAuthor(field.id);
           }}
         >
-          Confirm
+          OK
         </Confirm>
-      </IconContainer>
+      </IconsContainer>
     </Container>
   );
 };

@@ -17,7 +17,9 @@ const NamesContainer = styled.div`
   align-items: center;
 `;
 
-const MyLink = styled.a``;
+const MyLink = styled.a`
+  font-weight: bold;
+`;
 
 const Delete = styled.div`
   margin-left: auto;
@@ -30,7 +32,7 @@ const Body = styled.div`
 
 export const ConfirmedRow = ({ field, index, ...otherProps }) => {
   const ethAddress = field.personal.ethAddress;
-  console.log(field);
+
   return (
     <Container>
       <NamesContainer>

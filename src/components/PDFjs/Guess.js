@@ -50,6 +50,9 @@ class Guess extends Component {
         </Header>
 
         <Body>
+          {this.props.guessedFields.length === 0 ? (
+            <i>Add a new author.</i>
+          ) : null}
           {this.props.guessedFields.map(field => {
             return (
               <GuessRow

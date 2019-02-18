@@ -57,6 +57,11 @@ class Confirmed extends Component {
     return (
       <Container>
         <Title>Confirmed Authors</Title>
+        {this.props.fields.length === 0 ? (
+          <i style={{ padding: 15 }}>
+            Confirm the authors in the left section.
+          </i>
+        ) : null}
         <Body>
           {this.props.fields.map((field, i) => {
             return (
