@@ -38,7 +38,6 @@ class Viewer extends Component {
         return page.text;
       }),
       sentenceMap: pageObjects.map(page => {
-        console.log(page.sentenceMap);
         return page.sentenceMap;
       })
     });
@@ -66,11 +65,26 @@ class Viewer extends Component {
             const textItems = textContent.items;
             const sentenceMap = that.getMap(textItems);
             const text = that.getText(textItems);
+            const references = that.getReferences(textItems);
+
             let obj = { sentenceMap, text, pageNum };
             resolve(obj);
           });
       });
     });
+  }
+
+  getReferences(textItems) {
+    for (let i = 0; i < textItems.length; i++) {
+      const line = textItems[i];
+      // refs found in the line
+      let refs = line.str.toString().match(/\[([0-9]+)]/g);
+
+      if (refs) {
+        refs = refs.map(t => t.trim());
+        console.log(refs, line);
+      }
+    }
   }
 
   getText(textItems) {
