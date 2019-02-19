@@ -1,6 +1,7 @@
 import { ALL_NAMES } from "../../data/AllNames";
 import { TWENTY_K_ENGLISH_WORDS } from "../../data/EnglishWords";
 import nlp from "compromise";
+import _ from "lodash";
 
 export const EXTRACT_ENTITIES = text => {
   let entities = [];
@@ -34,7 +35,7 @@ export const EXTRACT_ENTITIES = text => {
         }
       }
     });
-  return entities;
+  return _.flattenDeep(entities);
 };
 
 const areGeneralNameRequirementsSatisfied = array => {

@@ -30,7 +30,6 @@ class AddressExtractor extends Component {
     // consider just the first page for main authors
     if (this.props.pageNr === 1) {
       const entities = _.flattenDeep(this.findAllEntities());
-      console.log(entities);
        if (entities.length > 0) {
          this.props.setEntities(entities);
        }
@@ -39,7 +38,6 @@ class AddressExtractor extends Component {
 
   findAllEntities() {
     const page = this.props.page;
-
     let entities = [];
     page.map(sentence => {
       let text = sentence.str;
