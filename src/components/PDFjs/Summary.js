@@ -42,7 +42,6 @@ class Summary extends Component {
     let guessedFields = [...this.state.guessedFields];
     let { entities } = this.props;
     entities.map(entity => {
-      entity = entity[0];
       const fName = entity.firstName;
       const lName = entity.lastName;
       const fNameValue = fName

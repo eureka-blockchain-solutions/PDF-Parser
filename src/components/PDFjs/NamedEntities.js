@@ -7,10 +7,8 @@ const Container = styled.div``;
 const NamedEntities = ({ entities }) => {
   return (
     <Container>
-      {entities.map(array => {
-        return array.map((entity, i) => {
-          return <Entity key={i} entity={entity} />;
-        });
+      {entities.map((entity, i) => {
+        return <Entity key={i} entity={entity} />;
       })}
     </Container>
   );

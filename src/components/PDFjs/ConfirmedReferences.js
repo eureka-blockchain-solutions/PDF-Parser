@@ -11,7 +11,9 @@ const Title = styled.h3`
   padding-left: 15px;
 `;
 
-const Body = styled.div``;
+const Body = styled.div`
+  padding: 15px;
+`;
 
 const ConfirmedReferences = () => {
   return (
