@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Page } from "./Page";
 import AddressExtractor from "./AddressExtractor";
 import EurekaRotateSpinner from "../../views/spinners/EurekaRotateSpinner";
+import { REF_STOP_WORDS } from "../../constants/ReferencesStopWords";
 
 const ViewContainer = styled.div``;
 
@@ -15,7 +16,11 @@ const PageContainer = styled.div`
 class Viewer extends Component {
   constructor() {
     super();
-    this.state = { pages: null, sentenceMap: null };
+    this.state = {
+      pages: null,
+      sentenceMap: null,
+      refStartPointHasBeenFound: false
+    };
   }
 
   async componentDidMount() {
@@ -23,21 +28,18 @@ class Viewer extends Component {
 
     const TOTAL_PAGES = pdf ? pdf._pdfInfo.numPages : 0;
 
-    const pagesPromises = [];
+    let pages = [];
 
     for (let p = 1; p <= TOTAL_PAGES; p++) {
-      pagesPromises.push(this.getTextContent(p, pdf));
+      let page = await this.getTextContent(p, pdf);
+      pages.push(page);
     }
 
-    const pageObjects = await Promise.all(pagesPromises).then(obj => {
-      return obj;
-    });
-
     this.setState({
-      pages: pageObjects.map(page => {
+      pages: pages.map(page => {
         return page.text;
       }),
-      sentenceMap: pageObjects.map(page => {
+      sentenceMap: pages.map(page => {
         return page.sentenceMap;
       })
     });
@@ -65,7 +67,7 @@ class Viewer extends Component {
             const textItems = textContent.items;
             const sentenceMap = that.getMap(textItems);
             const text = that.getText(textItems);
-            const references = that.getReferences(textItems);
+            const references = that.getReferences(textItems, pageNum);
 
             let obj = { sentenceMap, text, pageNum };
             resolve(obj);
@@ -74,17 +76,47 @@ class Viewer extends Component {
     });
   }
 
-  getReferences(textItems) {
+  getReferences(textItems, pageNum) {
+    console.log("Evaluating page nunber ", pageNum);
     for (let i = 0; i < textItems.length; i++) {
-      const line = textItems[i];
+      const line = textItems[i].str;
       // refs found in the line
-      let refs = line.str.toString().match(/\[([0-9]+)]/g);
 
-      if (refs) {
-        refs = refs.map(t => t.trim());
-        console.log(refs, line);
+      if (
+        REF_STOP_WORDS.includes(line.toLowerCase()) ||
+        REF_STOP_WORDS.includes(line.toUpperCase())
+      ) {
+        this.setState({ refStartPointHasBeenFound: true });
+      }
+      // TODO: consider these cases as well [1] or [1,3] or [8-10]
+      let refNumber = this.extractReferenceNumber(line);
+      if (
+        refNumber &&
+        refNumber.length > 0 &&
+        this.state.refStartPointHasBeenFound
+      ) {
+        let refNumberString = refNumber[0];
+        let reference = line;
+        reference = reference.replace(refNumberString, ""); // remove ref number from string
+
+        while (!this.extractReferenceNumber(textItems[++i].str)) {
+          if (i + 1 === textItems.length) {
+            break;
+          }
+          reference += textItems[i].str + " ";
+        }
+        i--;
+        console.log(refNumberString + "___" + reference);
       }
     }
+  }
+
+  extractReferenceNumber(text) {
+    let match = text.toString().match(/\[([0-9]+)]/g);
+    if (match) {
+      return match.map(m => m.trim());
+    }
+    return null;
   }
 
   getText(textItems) {

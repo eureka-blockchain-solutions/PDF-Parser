@@ -36,19 +36,19 @@ const IContainer = styled.div`
   justify-content: center;
   padding: 2px 4px;
   border-radius: 4px;
-  margin-right: 10px;
 `;
 
 const Confirm = styled.div`
   background: ${__ALERT_SUCCESS};
   padding: 2px 4px;
   border-radius: 4px;
+  margin-right: 10px;
   color: white;
   font-weight: bold;
   text-transform: uppercase;
   font-size: 8px;
   cursor: pointer;
-  line-height: 2.4;
+  line-height: 2.37;
   letter-spacing: 0.8px;
 `;
 
@@ -85,9 +85,6 @@ const GuessRow = ({ field, ...otherProps }) => {
           otherProps.onDelete(field.id);
         }}
       >
-        <IContainer>
-          <Icon icon={"delete"} width={10} height={10} color={"white"} />
-        </IContainer>
         <Confirm
           onClick={() => {
             otherProps.confirmAuthor(field.id);
@@ -95,6 +92,9 @@ const GuessRow = ({ field, ...otherProps }) => {
         >
           OK
         </Confirm>
+        <IContainer>
+          <Icon icon={"delete"} width={10} height={10} color={"white"} />
+        </IContainer>
       </IconsContainer>
     </Container>
   );
