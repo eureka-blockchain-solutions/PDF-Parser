@@ -31,7 +31,7 @@ class Viewer extends Component {
     let pages = [];
 
     for (let p = 1; p <= TOTAL_PAGES; p++) {
-      let page = await this.getTextContent(p, pdf);
+      let page = await this.getTextContent(p, pdf, TOTAL_PAGES);
       pages.push(page);
     }
 
@@ -52,7 +52,7 @@ class Viewer extends Component {
    * @param {PDFDocument} PDFDocumentInstance The PDF document obtained
    * https://mozilla.github.io/pdf.js/api/draft/global.html#getTextContentParameters
    **/
-  getTextContent(pageNum, PDFDocumentInstance) {
+  getTextContent(pageNum, PDFDocumentInstance, TOTAL_PAGES) {
     // Return a Promise that is solved once the text of the page is retrieven
     const that = this;
     return new Promise((resolve, reject) => {
@@ -67,7 +67,11 @@ class Viewer extends Component {
             const textItems = textContent.items;
             const sentenceMap = that.getMap(textItems);
             const text = that.getText(textItems);
-            const references = that.getReferences(textItems, pageNum);
+            const references = that.getReferences(
+              textItems,
+              pageNum,
+              TOTAL_PAGES
+            );
 
             let obj = { sentenceMap, text, pageNum };
             resolve(obj);
@@ -76,15 +80,14 @@ class Viewer extends Component {
     });
   }
 
-  getReferences(textItems, pageNum) {
+  getReferences(textItems, pageNum, TOTAL_PAGES) {
     console.log("Evaluating page nunber ", pageNum);
     for (let i = 0; i < textItems.length; i++) {
       const line = textItems[i].str;
-      // refs found in the line
-
       if (
-        REF_STOP_WORDS.includes(line.toLowerCase()) ||
-        REF_STOP_WORDS.includes(line.toUpperCase())
+        (REF_STOP_WORDS.includes(line.toLowerCase()) ||
+          REF_STOP_WORDS.includes(line.toUpperCase())) &&
+        this.refsAreInTheLastPages(pageNum, TOTAL_PAGES)
       ) {
         this.setState({ refStartPointHasBeenFound: true });
       }
@@ -109,6 +112,15 @@ class Viewer extends Component {
         console.log(refNumberString + "___" + reference);
       }
     }
+  }
+
+  refsAreInTheLastPages(pageNum, TOTAL_PAGES) {
+    return (
+      TOTAL_PAGES - pageNum === 0 ||
+      TOTAL_PAGES - pageNum === 1 ||
+      TOTAL_PAGES - pageNum === 2 ||
+      TOTAL_PAGES - pageNum === 3
+    );
   }
 
   extractReferenceNumber(text) {
