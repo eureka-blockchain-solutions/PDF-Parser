@@ -98,12 +98,12 @@ class Viewer extends Component {
         let refNumberString = refNumber[0];
         let reference = line;
         reference = reference.replace(refNumberString, ""); // remove ref number from string
-
+        // continue until the next reference has been found in the text
         while (!this.extractReferenceNumber(textItems[++i].str)) {
+          reference += textItems[i].str + " ";
           if (i + 1 === textItems.length) {
             break;
           }
-          reference += textItems[i].str + " ";
         }
         i--;
         console.log(refNumberString + "___" + reference);
