@@ -56,6 +56,7 @@ class Confirmed extends Component {
   render() {
     return (
       <Container>
+        <Title>Confirmed Authors</Title>
         {this.props.fields.length === 0 ? (
           <i style={{ padding: 15 }}>
             Confirm the authors in the left section.

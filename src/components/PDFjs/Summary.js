@@ -8,6 +8,8 @@ import uuidv1 from "uuid";
 import queryString from "querystring";
 import GuessRow from "./GuessRow";
 import { getDomain } from "../../helpers/getDomain";
+import References from "./References";
+import ConfirmedReferences from "./ConfirmedReferences";
 
 const Container = styled.div`
   width: 100%;
@@ -109,7 +111,6 @@ class Summary extends Component {
                 [...this.state.guessedFields],
                 id
               );
-
               if (field) {
                 let user = await this.fetchAuthorInformation(field);
                 let personal = {};
@@ -170,6 +171,10 @@ class Summary extends Component {
               }
             }}
           />
+        </Body>
+        <Body>
+          <References references={this.props.references} />
+          <ConfirmedReferences />
         </Body>
       </Container>
     );

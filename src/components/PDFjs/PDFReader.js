@@ -23,7 +23,7 @@ const SubContainer = styled.div`
 class PDFReader extends Component {
   constructor() {
     super();
-    this.state = { pdf: null, entities: null };
+    this.state = { pdf: null, entities: null, references: null };
   }
 
   async componentDidMount() {
@@ -50,12 +50,18 @@ class PDFReader extends Component {
       <Container>
         {this.state.pdf ? (
           <SubContainer>
-            {this.state.entities ? (
-              <Summary entities={this.state.entities} />
+            {this.state.entities && this.state.references ? (
+              <Summary
+                entities={this.state.entities}
+                references={this.state.references}
+              />
             ) : null}
             <Viewer
               entities={this.state.entities}
               pdf={this.state.pdf}
+              setReferences={references => {
+                this.setState({ references });
+              }}
               setEntities={entities => {
                 this.setState({ entities });
               }}

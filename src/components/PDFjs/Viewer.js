@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import _ from "lodash";
 
 // Components
 import { Page } from "./Page";
@@ -35,6 +36,17 @@ class Viewer extends Component {
       pages.push(page);
     }
 
+    const references = _.flatten(
+      pages
+        .filter(page => {
+          return page.references.length > 0;
+        })
+        .map(page => {
+          return page.references;
+        })
+    );
+
+    this.props.setReferences(references);
     this.setState({
       pages: pages.map(page => {
         return page.text;
@@ -67,13 +79,14 @@ class Viewer extends Component {
             const textItems = textContent.items;
             const sentenceMap = that.getMap(textItems);
             const text = that.getText(textItems);
+
             const references = that.getReferences(
               textItems,
               pageNum,
               TOTAL_PAGES
             );
 
-            let obj = { sentenceMap, text, pageNum };
+            let obj = { sentenceMap, text, pageNum, references };
             resolve(obj);
           });
       });
@@ -81,7 +94,7 @@ class Viewer extends Component {
   }
 
   getReferences(textItems, pageNum, TOTAL_PAGES) {
-    console.log("Evaluating page nunber ", pageNum);
+    let references = [];
     for (let i = 0; i < textItems.length; i++) {
       const line = textItems[i].str;
       if (
@@ -109,9 +122,13 @@ class Viewer extends Component {
           }
         }
         i--;
-        console.log(refNumberString + "___" + reference);
+        references.push({
+          number: refNumberString,
+          reference: reference.toString().trim()
+        });
       }
     }
+    return references;
   }
 
   refsAreInTheLastPages(pageNum, TOTAL_PAGES) {
