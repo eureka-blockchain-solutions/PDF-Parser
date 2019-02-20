@@ -35,15 +35,7 @@ const Text = styled.div`
   margin-left: 12px;
 `;
 
-const getField = entity => {
-  return {
-    fName: entity.text,
-    lName: "",
-    id: uuidv1()
-  };
-};
-const Reference = ({ reference, ...otherProps }) => {
-  let entities = EXTRACT_ENTITIES(reference.reference);
+const Reference = ({ reference, entity, ...otherProps }) => {
   return (
     <Container>
       <Header>
@@ -51,20 +43,19 @@ const Reference = ({ reference, ...otherProps }) => {
         <Text>{reference.reference}</Text>
       </Header>
       <Body>
-        {entities.map(entity => {
-          const field = getField(entity);
+        {reference.entities.map(entity => {
           return (
             <GuessRow
-              field={field}
-              key={field.id}
+              field={entity}
+              key={entity.id}
               confirmAuthor={id => {
-                //TODO: this.props.confirmAuthor(id);
+                // this.props.confirmAuthor(id);
               }}
               onDelete={id => {
                 // TODO: this.props.onDelete(id);
               }}
               onChange={(key, id, value) => {
-                // TODO: this.props.onChange(key, id, value);
+                otherProps.onChange(key, id, value);
               }}
             />
           );

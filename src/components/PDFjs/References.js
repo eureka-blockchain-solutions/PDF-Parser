@@ -23,7 +23,6 @@ const Body = styled.div`
 `;
 
 const References = ({ references, ...otherProps }) => {
-  console.log(references);
   return (
     <Container>
       <Title>References we found</Title>{" "}
@@ -32,7 +31,21 @@ const References = ({ references, ...otherProps }) => {
           <i>We were not able to find any references</i>
         ) : null}
         {references.map(ref => {
-          return <Reference reference={ref} key={ref.number} />;
+          return (
+            <Reference
+              reference={ref}
+              key={ref.number}
+              onChange={(key, id, value) => {
+                otherProps.onChange(key, id, value);
+              }}
+              onDelete={id => {
+                otherProps.onDelete(id);
+              }}
+              confirmReference={id => {
+                otherProps.confirmReference(id);
+              }}
+            />
+          );
         })}
       </Body>
     </Container>

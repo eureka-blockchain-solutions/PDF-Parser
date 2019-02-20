@@ -6,10 +6,11 @@ import Confirmed from "./Confirmed";
 import * as PropTypes from "prop-types";
 import uuidv1 from "uuid";
 import queryString from "querystring";
-import GuessRow from "./GuessRow";
 import { getDomain } from "../../helpers/getDomain";
 import References from "./References";
 import ConfirmedReferences from "./ConfirmedReferences";
+import { EXTRACT_ENTITIES } from "./EXTRACT_ENTITY_FACTORY";
+import _ from "lodash";
 
 const Container = styled.div`
   width: 100%;
@@ -30,12 +31,15 @@ class Summary extends Component {
     super();
     this.state = {
       guessedFields: [],
-      confirmedFields: []
+      confirmedFields: [],
+      guessedReferences: [],
+      confirmedReferences: []
     };
   }
 
   componentDidMount() {
     this.initGuessedFields();
+    this.initGuessedReferences();
   }
 
   initGuessedFields() {
@@ -56,10 +60,30 @@ class Summary extends Component {
     this.setState({ guessedFields });
   }
 
+  initGuessedReferences() {
+    let { references } = this.props;
+    references.map(ref => {
+      let entities = EXTRACT_ENTITIES(ref.reference);
+      ref.entities = [];
+      entities.map(entity => {
+        ref.entities.push({ fName: entity.text, lName: "", id: uuidv1() });
+      });
+    });
+    this.setState({ guessedReferences: references });
+  }
+
   updateFields(list, key, id, value) {
     const field = list.find(f => f.id === id);
     field[key] = value;
     this.setState({ list });
+  }
+  updateReferences(key, id, value) {
+    let guessedReferences = [...this.state.guessedReferences];
+    let reference = _.flattenDeep(guessedReferences.map(r => r.entities)).find(
+      e => e.id === id
+    );
+    reference[key] = value;
+    this.setState({ guessedReferences });
   }
 
   addField(key, list, obj) {
@@ -172,7 +196,12 @@ class Summary extends Component {
           />
         </Body>
         <Body>
-          <References references={this.props.references} />
+          <References
+            references={this.state.guessedReferences}
+            onChange={(key, id, value) => {
+              this.updateReferences(key, id, value);
+            }}
+          />
           <ConfirmedReferences />
         </Body>
       </Container>
