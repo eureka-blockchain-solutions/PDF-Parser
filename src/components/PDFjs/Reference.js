@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { __ALERT_DANGER, __FIFTH, __GRAY_200 } from "../../helpers/colors";
-import { EXTRACT_ENTITIES } from "./EXTRACT_ENTITY_FACTORY";
 import GuessRow from "./GuessRow";
-import uuidv1 from "uuid";
 import Icon from "../../views/icons/Icon";
 
 const Container = styled.div`

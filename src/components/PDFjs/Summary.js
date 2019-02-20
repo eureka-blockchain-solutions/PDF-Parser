@@ -66,7 +66,7 @@ class Summary extends Component {
       let entities = EXTRACT_ENTITIES(ref.reference);
       ref.entities = [];
       entities.map(entity => {
-        ref.entities.push({ fName: entity.text, lName: "", id: uuidv1() });
+        ref.entities.push({ fName: entity.firstName, lName: entity.lastName, id: uuidv1() });
       });
     });
     this.setState({ guessedReferences: references });

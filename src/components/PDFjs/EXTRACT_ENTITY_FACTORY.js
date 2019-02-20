@@ -12,7 +12,22 @@ export const EXTRACT_ENTITIES = text => {
       let entity = extractEntities(token);
       if (entity) {
         if (entity[0].firstName && entity[0].lastName) {
-          entities.push(entity);
+          if (entity[0].text.includes(".")) {
+            const array = entity[0].text
+              .split(".")
+              .map(e => e.trim())
+              .filter(e => e !== "");
+            console.log(array);
+            entities.push([
+              {
+                text: entity[0].text,
+                firstName: array[0],
+                lastName: array.splice(1).join(" ")
+              }
+            ]);
+          } else {
+            entities.push(entity);
+          }
         }
       } else {
         const array = token.split(" ");
