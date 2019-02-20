@@ -19,6 +19,7 @@ const NamesContainer = styled.div`
 
 const MyLink = styled.a`
   font-weight: bold;
+  color: ${__ALERT_ERROR};
 `;
 
 const Delete = styled.div`
@@ -30,6 +31,27 @@ const Body = styled.div`
   display: flex;
 `;
 
+const Name = styled.div`
+  display: flex;
+`;
+
+const SmallView = styled.div`
+  display: flex;
+`;
+
+const SmallLabel = styled.div`
+  font-size: 9px;
+  font-weight: lighter;
+  padding: 0px 5px;
+  border-radius: 7px;
+  background: ${__GRAY_200};
+  margin: 0 4px;
+`;
+
+const AddressContainer = styled.div`
+  margin-top: 7px;
+`
+
 export const ConfirmedRow = ({ field, index, ...otherProps }) => {
   const ethAddress = field.personal.ethAddress;
 
@@ -37,16 +59,30 @@ export const ConfirmedRow = ({ field, index, ...otherProps }) => {
     <Container>
       <NamesContainer>
         <Avatar src={field.personal.avatar} width={22} height={22} right={10} />{" "}
-        {field.fName} {field.lName}
+        <Name>
+          <SmallView>
+            <SmallLabel>fName: </SmallLabel>
+            {field.fName}
+          </SmallView>
+        </Name>
+        <Name>
+          <SmallView>
+            <SmallLabel>lName: </SmallLabel>
+            {field.lName}
+          </SmallView>
+        </Name>
       </NamesContainer>
       <Body>
         {ethAddress ? (
-          <MyLink
-            href={`http://localhost:3001/app/users/${ethAddress}`}
-            target="_blank"
-          >
-            Author Lookup
-          </MyLink>
+          <AddressContainer>
+            <MyLink
+              href={`http://localhost:3001/app/users/${ethAddress}`}
+              target="_blank"
+            >
+              Author Lookup
+            </MyLink>
+            <small>, {ethAddress}</small>
+          </AddressContainer>
         ) : (
           <i>'No User found'</i>
         )}
