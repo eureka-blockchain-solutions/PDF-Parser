@@ -85,7 +85,7 @@ class Summary extends Component {
 
   removeField(key, list, id) {
     this.setState({
-      [key]: list.filter(f => f.id !== id)
+      [key]: _.flattenDeep(list).filter(f => f.id !== id)
     });
   }
 
@@ -193,6 +193,13 @@ class Summary extends Component {
             onChange={(key, id, value) => {
               let refs = [...this.state.guessedReferences];
               this.updateFields(refs.map(r => r.entities), key, id, value);
+            }}
+            onDelete={(refNumber, id) => {
+              let refs = [...this.state.guessedReferences];
+              const ref = refs.find(r => r.number === refNumber);
+              const newEntities = ref.entities.filter(e => e.id !== id);
+              ref.entities = newEntities;
+              this.setState({ guessedReferences: refs });
             }}
             onAdd={refNumber => {
               let refs = [...this.state.guessedReferences];

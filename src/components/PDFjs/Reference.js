@@ -73,7 +73,7 @@ const Reference = ({ reference, entity, ...otherProps }) => {
                 // this.props.confirmAuthor(id);
               }}
               onDelete={id => {
-                // TODO: this.props.onDelete(id);
+                otherProps.onDelete(reference.number, id);
               }}
               onChange={(key, id, value) => {
                 otherProps.onChange(key, id, value);

@@ -38,8 +38,8 @@ const References = ({ references, ...otherProps }) => {
               onChange={(key, id, value) => {
                 otherProps.onChange(key, id, value);
               }}
-              onDelete={id => {
-                otherProps.onDelete(id);
+              onDelete={(refNumber, id) => {
+                otherProps.onDelete(refNumber, id);
               }}
               confirmReference={id => {
                 otherProps.confirmReference(id);
