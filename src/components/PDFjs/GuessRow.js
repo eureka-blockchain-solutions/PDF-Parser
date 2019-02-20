@@ -61,8 +61,8 @@ const GuessRow = ({ field, ...otherProps }) => {
         <Label>First Name</Label>
         <InputField
           value={fName}
-          onChange={e => {
-            otherProps.onChange("fName", field.id, e.target.value);
+          onChange={value => {
+            otherProps.onChange("fName", field.id, value);
           }}
           status={""}
           placeholder={"First Name"}
@@ -72,8 +72,8 @@ const GuessRow = ({ field, ...otherProps }) => {
         <Label>Last Name</Label>
         <InputField
           value={lName}
-          onChange={e => {
-            otherProps.onChange("lName", field.id, e.target.value);
+          onChange={value => {
+            otherProps.onChange("lName", field.id, value);
           }}
           status={""}
           placeholder={"Last Name"}
