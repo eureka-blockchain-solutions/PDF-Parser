@@ -44,6 +44,9 @@ const References = ({ references, ...otherProps }) => {
               confirmReference={id => {
                 otherProps.confirmReference(id);
               }}
+              onAdd={(refNumber) => {
+                otherProps.onAdd(refNumber);
+              }}
             />
           );
         })}

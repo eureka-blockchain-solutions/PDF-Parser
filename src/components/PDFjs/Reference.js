@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { __FIFTH, __GRAY_200 } from "../../helpers/colors";
+import { __ALERT_DANGER, __FIFTH, __GRAY_200 } from "../../helpers/colors";
 import { EXTRACT_ENTITIES } from "./EXTRACT_ENTITY_FACTORY";
 import GuessRow from "./GuessRow";
 import uuidv1 from "uuid";
+import Icon from "../../views/icons/Icon";
 
 const Container = styled.div`
   display: flex;
@@ -31,6 +32,19 @@ const Number = styled.div`
 
 const Body = styled.div``;
 
+const IconContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: ${__ALERT_DANGER};
+  margin-left: auto;
+  margin-top: -10px;
+`;
+
 const Text = styled.div`
   margin-left: 12px;
 `;
@@ -42,6 +56,13 @@ const Reference = ({ reference, entity, ...otherProps }) => {
         <Number>{reference.number}</Number>
         <Text>{reference.reference}</Text>
       </Header>
+      <IconContainer
+        onClick={() => {
+          otherProps.onAdd(reference.number);
+        }}
+      >
+        <Icon icon={"plus"} width={12} height={12} color={"white"} noMove />
+      </IconContainer>
       <Body>
         {reference.entities.map(entity => {
           return (

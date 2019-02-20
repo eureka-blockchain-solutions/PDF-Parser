@@ -194,6 +194,17 @@ class Summary extends Component {
               let refs = [...this.state.guessedReferences];
               this.updateFields(refs.map(r => r.entities), key, id, value);
             }}
+            onAdd={refNumber => {
+              let refs = [...this.state.guessedReferences];
+              let list = refs.find(r => r.number === refNumber).entities;
+              list.push({
+                fName: "",
+                lName: "",
+                id: uuidv1()
+              });
+              refs.entities = list;
+              this.setState({ guessedReferences: refs });
+            }}
           />
           <ConfirmedReferences />
         </Body>
