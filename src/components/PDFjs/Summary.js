@@ -72,10 +72,10 @@ class Summary extends Component {
     this.setState({ guessedReferences: references });
   }
 
-  updateFields(list, key, id, value) {
+  updateFields(listName, list, key, id, value) {
     const field = _.flattenDeep(list).find(f => f.id === id);
     field[key] = value;
-    this.setState({ list });
+    this.setState({ [listName]: list });
   }
 
   addField(key, list, obj) {
@@ -151,6 +151,7 @@ class Summary extends Component {
   }
 
   render() {
+    console.log("changed");
     return (
       <Container>
         <Title>Summary Functional Component</Title>
@@ -183,7 +184,13 @@ class Summary extends Component {
               );
             }}
             onChange={(key, id, value) => {
-              this.updateFields([...this.state.guessedFields], key, id, value);
+              this.updateFields(
+                "guessedFields",
+                [...this.state.guessedFields],
+                key,
+                id,
+                value
+              );
             }}
           />
           <Confirmed
@@ -208,9 +215,13 @@ class Summary extends Component {
         <Body>
           <References
             references={this.state.guessedReferences}
-            onChange={(key, id, value) => {
+            onChange={(refNumber, key, id, value) => {
               let refs = [...this.state.guessedReferences];
-              this.updateFields(refs.map(r => r.entities), key, id, value);
+              let entity = refs
+                .find(r => r.number === refNumber)
+                .entities.find(e => e.id === id);
+              entity[key] = value;
+              this.setState({ guessedReferences: refs });
             }}
             onDelete={(refNumber, id) => {
               this.removeReference(refNumber, id);

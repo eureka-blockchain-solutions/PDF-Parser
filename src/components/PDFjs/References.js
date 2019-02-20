@@ -35,8 +35,8 @@ const References = ({ references, ...otherProps }) => {
             <Reference
               reference={ref}
               key={ref.number}
-              onChange={(key, id, value) => {
-                otherProps.onChange(key, id, value);
+              onChange={(refNumber, key, id, value) => {
+                otherProps.onChange(refNumber, key, id, value);
               }}
               onDelete={(refNumber, id) => {
                 otherProps.onDelete(refNumber, id);

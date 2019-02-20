@@ -76,7 +76,7 @@ const Reference = ({ reference, entity, ...otherProps }) => {
                 otherProps.onDelete(reference.number, id);
               }}
               onChange={(key, id, value) => {
-                otherProps.onChange(key, id, value);
+                otherProps.onChange(reference.number ,key, id, value);
               }}
             />
           );
