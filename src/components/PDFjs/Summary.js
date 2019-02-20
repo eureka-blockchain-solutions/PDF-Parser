@@ -73,17 +73,9 @@ class Summary extends Component {
   }
 
   updateFields(list, key, id, value) {
-    const field = list.find(f => f.id === id);
+    const field = _.flattenDeep(list).find(f => f.id === id);
     field[key] = value;
     this.setState({ list });
-  }
-  updateReferences(key, id, value) {
-    let guessedReferences = [...this.state.guessedReferences];
-    let reference = _.flattenDeep(guessedReferences.map(r => r.entities)).find(
-      e => e.id === id
-    );
-    reference[key] = value;
-    this.setState({ guessedReferences });
   }
 
   addField(key, list, obj) {
@@ -199,7 +191,8 @@ class Summary extends Component {
           <References
             references={this.state.guessedReferences}
             onChange={(key, id, value) => {
-              this.updateReferences(key, id, value);
+              let refs = [...this.state.guessedReferences];
+              this.updateFields(refs.map(r => r.entities), key, id, value);
             }}
           />
           <ConfirmedReferences />
