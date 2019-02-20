@@ -89,6 +89,44 @@ class Summary extends Component {
     });
   }
 
+  removeReference(refNumber, id) {
+    let refs = [...this.state.guessedReferences];
+    const ref = refs.find(r => r.number === refNumber);
+    const newEntities = ref.entities.filter(e => e.id !== id);
+    ref.entities = newEntities;
+    this.setState({ guessedReferences: refs });
+  }
+
+  addReference(refNumber, obj) {
+    let refs = [...this.state.guessedReferences];
+    let list = refs.find(r => r.number === refNumber).entities;
+    list.push(obj);
+    refs.entities = list;
+    this.setState({ guessedReferences: refs });
+  }
+
+  async addFieldToConfirmedList(field, key, list) {
+    if (field) {
+      let user = await this.fetchAuthorInformation(field);
+      let personal = {};
+
+      if (user) {
+        personal = {
+          ethAddress: user.ethereumAddress,
+          avatar: user.avatar,
+          email: user.email
+        };
+      }
+      this.addField(key, list, {
+        personal,
+        fName: field.fName,
+        lName: field.lName,
+        refNumber: field.refNumber,
+        id: uuidv1()
+      });
+    }
+  }
+
   fetchAuthorInformation(field) {
     let url = queryString.stringify(field);
     return fetch(`${getDomain()}/api/users?${url}`, {
@@ -126,29 +164,9 @@ class Summary extends Component {
                 [...this.state.guessedFields],
                 id
               );
-              if (field) {
-                let user = await this.fetchAuthorInformation(field);
-                let personal = {};
-
-                if (user) {
-                  personal = {
-                    ethAddress: user.ethereumAddress,
-                    avatar: user.avatar,
-                    email: user.email
-                  };
-                }
-
-                this.addField(
-                  "confirmedFields",
-                  [...this.state.confirmedFields],
-                  {
-                    personal,
-                    fName: field.fName,
-                    lName: field.lName,
-                    id: uuidv1()
-                  }
-                );
-              }
+              await this.addFieldToConfirmedList(field, "confirmedFields", [
+                ...this.state.confirmedFields
+              ]);
             }}
             onAdd={() => {
               this.addField("guessedFields", [...this.state.guessedFields], {
@@ -195,25 +213,38 @@ class Summary extends Component {
               this.updateFields(refs.map(r => r.entities), key, id, value);
             }}
             onDelete={(refNumber, id) => {
-              let refs = [...this.state.guessedReferences];
-              const ref = refs.find(r => r.number === refNumber);
-              const newEntities = ref.entities.filter(e => e.id !== id);
-              ref.entities = newEntities;
-              this.setState({ guessedReferences: refs });
+              this.removeReference(refNumber, id);
             }}
             onAdd={refNumber => {
-              let refs = [...this.state.guessedReferences];
-              let list = refs.find(r => r.number === refNumber).entities;
-              list.push({
+              this.addReference(refNumber, {
                 fName: "",
                 lName: "",
                 id: uuidv1()
               });
-              refs.entities = list;
-              this.setState({ guessedReferences: refs });
+            }}
+            confirmReference={async (refNumber, id) => {
+              let field = this.state.guessedReferences
+                .find(r => r.number === refNumber)
+                .entities.find(e => e.id === id);
+              field.refNumber = refNumber;
+              this.removeReference(refNumber, id);
+              await this.addFieldToConfirmedList(field, "confirmedReferences", [
+                ...this.state.confirmedReferences
+              ]);
             }}
           />
-          <ConfirmedReferences />
+          <ConfirmedReferences
+            confirmedReferences={this.state.confirmedReferences}
+            onDelete={(id, refNumber) => {
+              let field = this.state.confirmedReferences.find(f => f.id === id);
+              this.removeField(
+                "confirmedReferences",
+                [...this.state.confirmedReferences],
+                id
+              );
+              this.addReference(refNumber, field);
+            }}
+          />
         </Body>
       </Container>
     );

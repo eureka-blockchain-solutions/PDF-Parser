@@ -41,10 +41,10 @@ const References = ({ references, ...otherProps }) => {
               onDelete={(refNumber, id) => {
                 otherProps.onDelete(refNumber, id);
               }}
-              confirmReference={id => {
-                otherProps.confirmReference(id);
+              confirmReference={(refNumber, id) => {
+                otherProps.confirmReference(refNumber, id);
               }}
-              onAdd={(refNumber) => {
+              onAdd={refNumber => {
                 otherProps.onAdd(refNumber);
               }}
             />

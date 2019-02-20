@@ -80,11 +80,7 @@ const GuessRow = ({ field, ...otherProps }) => {
         />
       </InputContainer>
 
-      <IconsContainer
-        onClick={() => {
-          otherProps.onDelete(field.id);
-        }}
-      >
+      <IconsContainer>
         <Confirm
           onClick={() => {
             otherProps.confirmAuthor(field.id);
@@ -92,7 +88,11 @@ const GuessRow = ({ field, ...otherProps }) => {
         >
           OK
         </Confirm>
-        <IContainer>
+        <IContainer
+          onClick={() => {
+            otherProps.onDelete(field.id);
+          }}
+        >
           <Icon icon={"delete"} width={10} height={10} color={"white"} />
         </IContainer>
       </IconsContainer>

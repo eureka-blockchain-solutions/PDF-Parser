@@ -70,7 +70,7 @@ const Reference = ({ reference, entity, ...otherProps }) => {
               field={entity}
               key={entity.id}
               confirmAuthor={id => {
-                // this.props.confirmAuthor(id);
+                otherProps.confirmReference(reference.number, id);
               }}
               onDelete={id => {
                 otherProps.onDelete(reference.number, id);
