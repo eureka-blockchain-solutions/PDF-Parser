@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Entity from "./Entity";
+import EKAAddresses from "./EKAAddresses";
 
 const Container = styled.div``;
 
-const NamedEntities = ({ entities }) => {
+const NamedEntities = ({ addresses }) => {
   return (
     <Container>
-      {entities.map((entity, i) => {
-        return <Entity key={i} entity={entity} />;
+      {addresses.map((address, i) => {
+        return <EKAAddresses key={i} address={address} />;
       })}
     </Container>
   );

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { __ALERT_ERROR } from "../../helpers/colors";
+import {
+  __ALERT_ERROR,
+  __ALERT_WARNING,
+  __GRAY_900
+} from "../../helpers/colors";
 import Guess from "./Guess";
 import Confirmed from "./Confirmed";
 import * as PropTypes from "prop-types";
@@ -20,6 +24,15 @@ const Container = styled.div`
 const Title = styled.h2`
   color: ${__ALERT_ERROR};
   text-transform: uppercase;
+`;
+
+const Addresses = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const STitle = styled.h3`
+  color: ${__GRAY_900};
 `;
 
 const Body = styled.div`
@@ -66,7 +79,11 @@ class Summary extends Component {
       let entities = EXTRACT_ENTITIES(ref.reference);
       ref.entities = [];
       entities.map(entity => {
-        ref.entities.push({ fName: entity.firstName, lName: entity.lastName, id: uuidv1() });
+        ref.entities.push({
+          fName: entity.firstName,
+          lName: entity.lastName,
+          id: uuidv1()
+        });
       });
     });
     this.setState({ guessedReferences: references });
@@ -155,6 +172,16 @@ class Summary extends Component {
     return (
       <Container>
         <Title>Summary Functional Component</Title>
+        <Body>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <STitle>Addresses We Found</STitle>
+            <Addresses>
+              {this.props.addresses.map(a => {
+                return <a href={"/bau"}>{a}</a>;
+              })}
+            </Addresses>
+          </div>
+        </Body>
         <Body>
           <Guess
             guessedFields={this.state.guessedFields}

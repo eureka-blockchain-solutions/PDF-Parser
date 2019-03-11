@@ -24,29 +24,44 @@ const Text = styled.div``;
 class AddressExtractor extends Component {
   constructor() {
     super();
+    this.state = {
+      addresses: null
+    };
   }
 
   componentDidMount() {
     // consider just the first page for main authors
-    if (this.props.pageNr === 1) {
-      const entities = _.flattenDeep(this.findAllEntities());
-       if (entities.length > 0) {
-         this.props.setEntities(entities);
-       }
+    let { entities, addresses } = this.findAllEntities();
+    entities = _.flattenDeep(entities);
+    if (entities.length > 0) {
+      this.props.setEntities(entities);
+    }
+
+    if (addresses.length > 0) {
+      this.setState({ addresses });
     }
   }
 
   findAllEntities() {
     const page = this.props.page;
     let entities = [];
+    let addresses = [];
     page.map(sentence => {
       let text = sentence.str;
-      let entity = EXTRACT_ENTITIES(text);
-      if (entity.length > 0) {
-        entities.push(entity);
+
+      if (this.props.pageNr === 1) {
+        let entity = EXTRACT_ENTITIES(text);
+        if (entity.length > 0) {
+          entities.push(entity);
+        }
+      }
+
+      let EKA = this.isEKA(text);
+      if (EKA) {
+        addresses.push(EKA);
       }
     });
-    return entities;
+    return { entities, addresses };
   }
 
   /**
@@ -73,11 +88,12 @@ class AddressExtractor extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <Container>
-        <Title>Evaluating Page Number {this.props.pageNr}</Title>
-        {this.props.entities ? (
-          <NamedEntities entities={this.props.entities} />
+        <Title>EKA Addresses we found on Page {this.props.pageNr}</Title>
+        {this.state.addresses ? (
+          <NamedEntities addresses={this.state.addresses} />
         ) : null}
       </Container>
     );

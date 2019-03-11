@@ -193,6 +193,9 @@ class Viewer extends Component {
                   setEntities={entities => {
                     this.props.setEntities(entities);
                   }}
+                  setAddresses={addresses => {
+                    this.props.setAddresses(addresses);
+                  }}
                 />
               </PageContainer>
             );

@@ -17,7 +17,6 @@ export const EXTRACT_ENTITIES = text => {
               .split(".")
               .map(e => e.trim())
               .filter(e => e !== "");
-            console.log(array);
             entities.push([
               {
                 text: entity[0].text,

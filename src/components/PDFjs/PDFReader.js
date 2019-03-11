@@ -23,7 +23,12 @@ const SubContainer = styled.div`
 class PDFReader extends Component {
   constructor() {
     super();
-    this.state = { pdf: null, entities: null, references: null };
+    this.state = {
+      pdf: null,
+      entities: null,
+      references: null,
+      addresses: []
+    };
   }
 
   async componentDidMount() {
@@ -32,8 +37,7 @@ class PDFReader extends Component {
     /*    const url =
           "";*/
 
-    const url =
-      "https://s3.amazonaws.com/sosjournals/GutGboiHYnLdCoSMPID960454.pdf"; //this.props.pdfs[0];
+    const url = this.props.pdfs[0];
 
     // The workerSrc property shall be specified.
     PdfJs.GlobalWorkerOptions.workerSrc = WORKER_URL;
@@ -55,6 +59,7 @@ class PDFReader extends Component {
               <Summary
                 entities={this.state.entities}
                 references={this.state.references}
+                addresses={this.state.addresses}
               />
             ) : null}
             <Viewer
@@ -65,6 +70,8 @@ class PDFReader extends Component {
               }}
               setEntities={entities => {
                 this.setState({ entities });
+              }}
+              setAddresses={addresses => {
               }}
             />
           </SubContainer>
