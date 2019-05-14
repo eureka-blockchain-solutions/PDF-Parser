@@ -8,7 +8,14 @@ const Container = styled.div`
 `;
 
 const EKAAddresses = ({ address }) => {
-  return <Container>{InitialPrefix + address}</Container>;
+  address = InitialPrefix + address;
+  return (
+    <Container>
+      <a href={`http://localhost:3001/app/users/${address}`} target="_blank">
+        {address}
+      </a>
+    </Container>
+  );
 };
 
 export default EKAAddresses;

@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.11.2)  11 MAR 2019 19:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.11.2)  14 MAR 2019 11:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./thesis.tex
+**thesis.tex
 
 ! Emergency stop.
-<*> ./thesis.tex
-                
+<*> thesis.tex
+              
 *** (job aborted, file error in nonstop mode)
 
  

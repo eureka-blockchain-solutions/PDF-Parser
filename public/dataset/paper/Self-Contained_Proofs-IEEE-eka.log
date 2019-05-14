@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.11.2)  11 MAR 2019 19:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.11.2)  14 MAR 2019 11:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1050,15 +1050,11 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-
-Overfull \vbox (1.33194pt too high) has occurred while \output is active []
-
-
 [6] (./Self-Contained_Proofs-IEEE-eka.aux) ) 
 Here is how much of TeX's memory you used:
  18260 strings out of 492649
  388996 string characters out of 6129622
- 451902 words of memory out of 5000000
+ 450902 words of memory out of 5000000
  21787 multiletter control sequences out of 15000+600000
  35813 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1074,7 +1070,7 @@ onts/cm/cmsy7.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utm
 b8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><
 /usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local
 /texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Self-Contained_Proofs-IEEE-eka.pdf (6 pages, 144897 bytes).
+Output written on Self-Contained_Proofs-IEEE-eka.pdf (6 pages, 144963 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  48 compressed objects within 1 object stream

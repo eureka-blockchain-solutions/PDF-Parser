@@ -174,7 +174,7 @@ class Summary extends Component {
         <Title>Summary Functional Component</Title>
         <Body>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <STitle>Addresses We Found</STitle>
+            <STitle></STitle>
             <Addresses>
               {this.props.addresses.map(a => {
                 return <a href={"/bau"}>{a}</a>;
